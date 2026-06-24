@@ -1,11 +1,16 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <component :is="layout">
+    <router-view />
+  </component>
 </template>
 
-<style scoped></style>
+<script>
+  const defaultLayout = "default";
+  export default {
+    computed: {
+      layout() {
+        return this.$route.meta.layout || defaultLayout;
+      },
+    },
+  };
+</script>
