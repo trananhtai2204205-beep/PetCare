@@ -7,7 +7,7 @@
                         style="height: 450px; object-fit: cover;">
                 </div>
             </template>
-        </div> 
+        </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -30,10 +30,12 @@
                                         <i class="fa-solid fa-phone-volume fa-4x text-primary"></i>
                                     </div>
                                     <div class="ms-4 pe-5">
-                                        <h5 class="text-capitalize fw-bold">Đặt lịch khẩn cấp</h5>
-                                        <p class="text-muted mb-2">Liên hệ ngay để được tư vấn</p>
-                                        <button class="btn btn-primary px-4 py-2">
-                                            <i class="fa-solid fa-calendar-plus me-2"></i>Đặt lịch ngay
+                                        <h5 class="text-capitalize fw-bold">Đặt Lịch Khẩn Cấp</h5>
+                                        <p class="text-muted mb-2">Đặt lịch ưu tiên để thú cưng được chăm sóc kịp thời
+                                        </p>
+                                        <button class="btn btn-danger px-4 py-2" @click="datLichKhanCap">
+                                            <i class="fa-solid fa-bolt me-2"></i>
+                                            Đặt Lịch Khẩn Cấp
                                         </button>
                                     </div>
                                 </div>
@@ -45,13 +47,16 @@
                                     <div class="">
                                         <i class="fa-solid fa-envelope-open-text fa-4x text-light"></i>
                                     </div>
+
                                     <div class="ms-4 pe-5">
-                                        <h5 class="text-capitalize text-light fw-bold">Tư vấn trực tuyến</h5>
-                                        <p class="text-light mb-2 ">Nhận tư vấn từ chuyên gia</p>
-                                        <button class="btn btn-light px-4 py-2">
-                                            <i class="fa-solid fa-comments me-2"></i>Chat ngay
+                                        <h5 class="text-capitalize text-light fw-bold">Lịch Hẹn Thú Cưng</h5>
+                                        <p class="text-light mb-2">Theo dõi các lịch khám và dịch vụ đã đặt</p>
+                                        <button class="btn btn-light px-4 py-2" @click="xemLichSu">
+                                            <i class="fa-solid fa-calendar-days me-2"></i>
+                                            Xem lịch sử đặt lịch
                                         </button>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -134,13 +139,13 @@
                         </div>
                         <hr>
                         <div class="row ">
-                            <template >
+                            <template>
                                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4 d-flex">
                                     <div class="card border-primary border-top border-start border-3 border-0 shadow-sm h-100 w-100"
                                         style="border-radius: 18px; transition: transform 0.2s;">
                                         <div class="card-body d-flex flex-column p-4">
                                             <div class="d-flex align-items-center mb-3">
-                                                <img  alt="avatar" width="100" height="100"
+                                                <img alt="avatar" width="100" height="100"
                                                     class="rounded-circle p-1 border border-dark me-3" />
                                                 <div>
                                                     <h5 class="fw-bold mb-1">tai beu </h5>
@@ -148,7 +153,8 @@
                                             </div>
                                             <div class="mb-2">
                                                 <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 fs-6">
-                                                    <i class="fa-solid fa-heart-pulse me-1"></i> taubeu N <span class="ai-cut"></span>
+                                                    <i class="fa-solid fa-heart-pulse me-1"></i> taubeu N <span
+                                                        class="ai-cut"></span>
                                                 </span>
                                             </div>
                                             <p class="flex-grow-1 mb-3">Mô tả dịch vụ...</p>
@@ -183,12 +189,12 @@
                                 </div>
                                 <button class="btn btn-primary">Xem thêm</button>
                             </div>
-                            <template >
+                            <template>
                                 <div class="col-lg-4 col-md-6 mb-2 flex-fill">
                                     <div class="card   border-primary border-top border-start  border-end border-bottom border-3 border-0"
                                         style="border-radius: 16px; ">
                                         <div class="d-flex flex-column align-items-center p-3">
-                                            <img  alt="avatar" width="150" height="150"
+                                            <img alt="avatar" width="150" height="150"
                                                 class="rounded-circle p-1 border border-dark" />
                                         </div>
                                         <div class="bg-light-info px-3 py-2">
@@ -202,9 +208,9 @@
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <h5><i class="fa-solid fa-user-doctor"></i> TRUONG PHONG MAI DAM  <b>
-                                                tAI DIEN
-                                                    </b></h5>
+                                            <h5><i class="fa-solid fa-user-doctor"></i> TRUONG PHONG MAI DAM <b>
+                                                    tAI DIEN
+                                                </b></h5>
                                             <hr>
                                             <b><i class="fa-solid fa-people-group"></i> HELLO</b>
                                             <hr>
@@ -266,7 +272,7 @@
                                     <div class="mb-3">
                                         <select class="form-select bg-light border-0">
                                             <option value="">Chọn chuyên khoa</option>
-                                            <option >
+                                            <option>
                                                 Tam than
                                             </option>
                                         </select>
@@ -274,7 +280,7 @@
                                     <div class="mb-3">
                                         <select class="form-select bg-light border-0">
                                             <option value="">Chọn bác sĩ</option>
-                                            <option >
+                                            <option>
                                                 TRUONG PHONG MAI DAM
                                             </option>
                                         </select>
@@ -282,14 +288,12 @@
                                     <div class="row mb-3">
                                         <div class="col-12">
                                             <input type="text" class="form-control bg-light border-0"
-                                                
                                                 placeholder="Đơn giá khám" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-12">
-                                            <select class="form-select bg-light border-0"
-                                                >
+                                            <select class="form-select bg-light border-0">
                                                 <option value="">Chọn ngày</option>
                                                 <option>2023-10-15</option>
                                             </select>
@@ -297,11 +301,9 @@
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-12">
-                                            <select class="form-select bg-light border-0 mt-2"
-                                                
-                                                >
+                                            <select class="form-select bg-light border-0 mt-2">
                                                 <option value="">Chọn thời gian bắt đầu</option>
-                                                <option >
+                                                <option>
                                                     22/12 - 08:00 - 09:00
                                                 </option>
                                             </select>
@@ -309,9 +311,9 @@
                                     </div>
                                     <div class="mb-3">
                                         <textarea class="form-control bg-light border-0" rows="2"
-                                           placeholder="Lý do khám"></textarea>
+                                            placeholder="Lý do khám"></textarea>
                                     </div>
-                                    <button class="btn btn-primary w-100 fw-bold py-3" >
+                                    <button class="btn btn-primary w-100 fw-bold py-3">
                                         <i class="fa-solid fa-calendar-check me-2"></i>ĐẶT LỊCH NGAY
                                     </button>
                                 </div>
@@ -527,20 +529,30 @@ import banner0 from '@/assets/images/banner0.jpg'
 import banner1 from '@/assets/images/banner1.jpg'
 import banner2 from '@/assets/images/banner2.jpg'
 import banner3 from '@/assets/images/banner3.jpg'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const datLichKhanCap = () => {
+    router.push('/ho-so')
+
+}
+const xemLichSu = () => {
+    router.push('/lich-su')
+}
 
 const list_slide = [
-  {
-    hinh_anh: banner0
-  },
-  {
-    hinh_anh: banner1
-  },
-  {
-    hinh_anh: banner2
-  },
-  {
-    hinh_anh: banner3
-  }
+    {
+        hinh_anh: banner0
+    },
+    {
+        hinh_anh: banner1
+    },
+    {
+        hinh_anh: banner2
+    },
+    {
+        hinh_anh: banner3
+    }
 ]
 // import axios from 'axios';
 // export default {
