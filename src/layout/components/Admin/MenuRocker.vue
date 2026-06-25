@@ -32,7 +32,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="nav-item">
-                            <router-link to="/admin/bac-si" class="nav-link">
+                            <router-link to="/admin/danh-sach-bac-si" class="nav-link">
                                 <div class="parent-icon"><i class="bx bx-list-ul"></i></div>
                                 <div class="menu-title">Danh sách Bác sĩ</div>
                             </router-link>
@@ -61,7 +61,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="nav-item">
-                            <router-link to="/admin/benh-nhan" class="nav-link">
+                            <router-link to="/admin/danh-sach" class="nav-link">
                                 <div class="parent-icon"><i class="bx bx-list-ul"></i></div>
                                 <div class="menu-title">Danh sách Bệnh nhân</div>
                             </router-link>
