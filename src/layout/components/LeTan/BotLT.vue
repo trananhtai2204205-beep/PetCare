@@ -8,24 +8,26 @@
                             <i class="fa-solid fa-hospital me-2 text-info"></i>
                             PetCare
                         </h3>
-                        <p class="text-light mb-4 lh-lg">Chúng tôi cam kết cung cấp dịch vụ y tế chất lượng cao với đội ngũ bác sĩ chuyên nghiệp và trang thiết bị hiện đại nhất.</p>
+                        <p class="text-light mb-4 lh-lg">PetCare mang đến dịch vụ chăm sóc sức khỏe toàn diện cho thú cưng với đội ngũ bác sĩ thú y giàu kinh nghiệm, trang thiết bị hiện đại và quy trình điều trị chuyên nghiệp.</p>
                         
                         <div class="mb-3">
                             <div class="d-flex align-items-center mb-3 p-2 rounded bg-secondary bg-opacity-25">
                                 <i class="fa-solid fa-location-dot me-3 text-info fs-5"></i>
-                                <span class="text-light">32 Xuân Diệu, Phường Hải Châu, TP. Đà Nẵng</span>
+                                <span class="text-light">32 Nguyễn Mộng Tuân, Hòa Khánh, Đà Nẵng 550000, Vietnam
+</span>
                             </div>
                             <div class="d-flex align-items-center mb-3 p-2 rounded bg-secondary bg-opacity-25">
                                 <i class="fa-solid fa-phone me-3 text-success fs-5"></i>
-                                <span class="text-light fw-semibold">0905523543</span>
+                                <span class="text-light fw-semibold">093 598 0348</span>
                             </div>
                             <div class="d-flex align-items-center mb-3 p-2 rounded bg-secondary bg-opacity-25">
                                 <i class="fa-solid fa-envelope me-3 text-primary fs-5"></i>
-                                <span class="text-light">quoclongdng@gmail.com</span>
+                                <span class="text-light">trananhtai2204205@gmail.com</span>
                             </div>
                             <div class="d-flex align-items-center p-2 rounded bg-secondary bg-opacity-25">
                                 <i class="fa-solid fa-clock me-3 text-warning fs-5"></i>
-                                <span class="text-light">Thứ 2 - Thứ 7: 8:00 - 18:00</span>
+                                <span class="text-light">Thứ 2 - Thứ 7: 07:30 - 18:00
+Chủ nhật: 08:00 - 12:00</span>
                             </div>
                         </div>
                     </div>
@@ -43,13 +45,13 @@
                             <li class="mb-3">
                                 <a href="#" class="text-light text-decoration-none d-flex align-items-center py-1 px-2 rounded">
                                     <i class="fa-solid fa-x-ray me-2 text-info"></i>
-                                    Chẩn đoán
+                                    Tiêm phòng
                                 </a>
                             </li>
                             <li class="mb-3">
                                 <a href="#" class="text-light text-decoration-none d-flex align-items-center py-1 px-2 rounded">
                                     <i class="fa-solid fa-pills me-2 text-info"></i>
-                                    Điều trị
+                                    Tẩy giun & ký sinh trùng
                                 </a>
                             </li>
                             <li class="mb-3">
@@ -74,31 +76,31 @@
                             <li class="mb-3">
                                 <a href="#" class="text-light text-decoration-none d-flex align-items-center py-1 px-2 rounded">
                                     <i class="fa-solid fa-heart-pulse me-2 text-danger"></i>
-                                    Tim mạch
+                                    Nội khoa thú y
                                 </a>
                             </li>
                             <li class="mb-3">
                                 <a href="#" class="text-light text-decoration-none d-flex align-items-center py-1 px-2 rounded">
                                     <i class="fa-solid fa-tooth me-2 text-warning"></i>
-                                    Nha khoa
+                                    Ngoại khoa
                                 </a>
                             </li>
                             <li class="mb-3">
                                 <a href="#" class="text-light text-decoration-none d-flex align-items-center py-1 px-2 rounded">
                                     <i class="fa-solid fa-brain me-2 text-primary"></i>
-                                    Thần kinh
+                                    Da liễu
                                 </a>
                             </li>
                             <li class="mb-3">
                                 <a href="#" class="text-light text-decoration-none d-flex align-items-center py-1 px-2 rounded">
                                     <i class="fa-solid fa-venus me-2 text-danger"></i>
-                                    Phụ khoa
+                                    Dinh dưỡng thú cưng
                                 </a>
                             </li>
                             <li class="mb-3">
                                 <a href="#" class="text-light text-decoration-none d-flex align-items-center py-1 px-2 rounded">
                                     <i class="fa-solid fa-baby me-2 text-success"></i>
-                                    Nhi khoa
+                                    Chẩn đoán hình ảnh
                                 </a>
                             </li>
                         </ul>
@@ -106,9 +108,9 @@
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="mb-4">
-                        <h5 class="fw-bold mb-4 text-info border-bottom border-info border-2 pb-2 d-inline-block">Đăng ký đặt lịch khám</h5>
+                        <h5 class="fw-bold mb-4 text-info border-bottom border-info border-2 pb-2 d-inline-block">Đăng ký nhận tư vấn PetCare</h5>
                         <div class="bg-secondary bg-opacity-25 p-4 rounded-3 mb-4">
-                            <p class="text-light mb-3">Nhận thông tin về các dịch vụ y tế mới nhất từ chúng tôi</p>
+                            <p class="text-light mb-3">Đăng ký để nhận các chương trình ưu đãi, kiến thức chăm sóc thú cưng và thông tin dịch vụ mới nhất từ PetCare.</p>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text bg-light border-0">
                                         <i class="fa-solid fa-envelope text-secondary"></i>
@@ -147,7 +149,7 @@
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                         <div class="d-flex align-items-center justify-content-center justify-content-md-start">
                             <i class="fa-solid fa-shield-heart me-2 text-info fs-5"></i>
-                            <span class="text-secondary fw-semibold">&copy; 2025 DZHealthcare. Tất cả quyền được bảo lưu.</span>
+                            <span class="text-secondary fw-semibold">&copy; 2026 SMILES. All rights reserved.</span>
                         </div>
                     </div>
                     <div class="col-md-6 text-center text-md-end">

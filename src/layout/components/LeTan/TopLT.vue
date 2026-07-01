@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-2">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center gap-2" href="/">
-                <img src="../../../assets/images/logo-icon.jpg" alt="logo icon" width="36" height="36">
+                <img src="https://play-lh.googleusercontent.com/Vg6kku8N6NdsNU_1JR-Oh0fmfZAWhp_JvW_atMvUiBcLuC0KaKjJXzKRdHvO2f4yx6LymncvtTmH1Eb5r8p2" alt="logo icon" width="50" height="50">
                 <span class="fw-bold fs-4 text-primary">PetCare</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
@@ -72,18 +72,24 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link d-flex align-items-center gap-2" to="/hinh-anh">
+                            <i class="fas fa-newspaper fs-5 text-info"></i>
+                            <span class="fw-semibold">Hình ảnh</span>
+                        </router-link>
+                    </li>
                 </ul>
 
                 <!-- User Dropdown khi đã đăng nhập -->
                 <div class="user-box dropdown">
                     <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
-                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img :src="'../../../assets/images/avatars/avatar-1.png'"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img :src="userProfile.hinh_anh || '../../../assets/images/avatars/avatar-1.png'"
                             class="user-img rounded-circle border border-2 border-primary" alt="user avatar"
                             style="width: 40px; height: 40px; object-fit: cover;">
                         <div class="user-info ps-3">
-                            <p class="user-name mb-0 fw-semibold text-dark">tai mat lon </p>
-                            <small class="text-muted">tai mat lon @gmail.com</small>
+                            <p class="user-name mb-0 fw-semibold text-dark">{{ userProfile.ho_ten }}</p>
+                            <small class="text-muted">{{ userProfile.email }}</small>
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0">
@@ -136,7 +142,7 @@
 </template>
 
 <script>
-// import baseRequestBenhNhan from '../../../core/baseRequestBenhNhan';
+import baseRequestLeTan from '../../../core/baseRequestLeTan';
 
 export default {
     data() {
@@ -149,37 +155,37 @@ export default {
             }
         }
     },
-    // mounted() {
-    //     this.checkLoginStatus();
-    // },
-    // methods: {
-    //     checkLoginStatus() {
-    //         const token = localStorage.getItem('token_benh_nhan');
-    //         if (token) {
-    //             this.isLoggedIn = true;
-    //             this.loadUserProfile();
-    //         } else {
-    //             this.isLoggedIn = false;
-    //         }
-    //     },
-    //     loadUserProfile() {
-    //         baseRequestBenhNhan.get('benh-nhan/profile/data', {
-    //             headers: {
-    //                 Authorization: "Bearer " + localStorage.getItem("token_benh_nhan"),
-    //             },
-    //         })
-    //             .then(res => {
-    //                 if (res.data.status) {
-    //                     this.userProfile = res.data.data;
-    //                 }
-    //             })
-    //             .catch((err) => {
-    //                 const listErr = err.response.data.errors;
-    //                 Object.values(listErr).forEach((error) => {
-    //                     this.$toast.error(error[0]);
-    //                 });
-    //             });
-    //     },
+    mounted() {
+        this.checkLoginStatus();
+    },
+    methods: {
+        checkLoginStatus() {
+            const token = localStorage.getItem('token_le_tan');
+            if (token) {
+                this.isLoggedIn = true;
+                this.loadUserProfile();
+            } else {
+                this.isLoggedIn = false;
+            }
+        },
+        loadUserProfile() {
+            baseRequestLeTan.get('le-tan/profile/data', {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token_le_tan"),
+                },
+            })
+                .then(res => {
+                    if (res.data.status) {
+                        this.userProfile = res.data.data;
+                    }
+                })
+                .catch((err) => {
+                    const listErr = err.response.data.errors;
+                    Object.values(listErr).forEach((error) => {
+                        this.$toast.error(error[0]);
+                    });
+                });
+        },
     //     logout() {
     //         baseRequestBenhNhan.post('benh-nhan/logout', {
     //             headers: {
@@ -224,7 +230,7 @@ export default {
     //                 });
     //             });
     //     }
-    // },
+    },
     watch: {
         '$route'() {
             this.checkLoginStatus();

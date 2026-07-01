@@ -42,12 +42,7 @@
                                         <label class="form-label fw-semibold">
                                             Tài khoản lễ tân
                                         </label>
-
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Nhập email hoặc tên đăng nhập">
-
+                                        <input type="email" class="form-control" v-model="user.email" placeholder="Nhập email hoặc tên đăng nhập">                                           
                                     </div>
 
                                     <!-- PASSWORD -->
@@ -62,6 +57,7 @@
                                             <input
                                                 :type="showPassword ? 'text' : 'password'"
                                                 class="form-control"
+                                                v-model="user.password"
                                                 placeholder="Nhập mật khẩu">
 
                                             <span
@@ -152,7 +148,7 @@
 
                                         <div class="d-grid">
 
-                                            <button
+                                            <button v-on:click="DangNhap()"
                                                 type="button"
                                                 class="btn btn-primary btn-lg">
 
@@ -207,7 +203,44 @@
 
     </div>
 </template>
+<script>
+import baseRequestLeTan from '../../../core/baseRequestLeTan';
+export default {
+    name: 'AdminLogin',
+    data() {
+        return {
+            user: {
+                email: '',
+                password: ''
+            },
+            showPassword: false,    
+        }
+    },
+    methods: {
+        DangNhap() {
+            baseRequestLeTan.post('le-tan/login', this.user)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message)
+                        this.user = {};
+                        localStorage.setItem('token_le_tan', res.data.token);
+                        localStorage.setItem('ho_ten_le_tan', res.data.ho_ten);
+                        this.$router.push('/');
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch((err) => {
+                    const listErr = err.response.data.errors;
+                    Object.values(listErr).forEach((error) => {
+                        this.$toast.error(error[0]);
+                    });
+                })
+        }
 
+    }
+}
+</script>
 <style scoped>
 
 .login-wrapper{
@@ -324,43 +357,3 @@
 }
 
 </style>
-
-
-<script>
-// import baseRequestBenhNhan from '../../../core/baseRequestBenhNhan';
-export default {
-    // name: 'AdminLogin',
-    // data() {
-    //     return {
-    //         user: {
-    //             email: '',
-    //             password: ''
-    //         },
-    //         showPassword: false,    
-    //     }
-    // },
-    // methods: {
-    //     DangNhap() {
-    //         baseRequestBenhNhan.post('benh-nhan/login', this.user)
-    //             .then((res) => {
-    //                 if (res.data.status) {
-    //                     this.$toast.success(res.data.message)
-    //                     this.user = {};
-    //                     localStorage.setItem('token_benh_nhan', res.data.token);
-    //                     localStorage.setItem('ho_ten_benh_nhan', res.data.ho_ten);
-    //                     this.$router.push('/');
-    //                 } else {
-    //                     this.$toast.error(res.data.message);
-    //                 }
-    //             })
-    //             .catch((err) => {
-    //                 const listErr = err.response.data.errors;
-    //                 Object.values(listErr).forEach((error) => {
-    //                     this.$toast.error(error[0]);
-    //                 });
-    //             })
-    //     }
-
-    // }
-}
-</script>

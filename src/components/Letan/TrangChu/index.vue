@@ -3,8 +3,8 @@
         <div class="carousel-inner">
             <template v-for="(value, index) in list_slide" :key="index">
                 <div class="carousel-item" :class="{ 'active': index === 0 }">
-                    <img :src="value.hinh_anh" class="d-block w-100" alt="..."
-                        style="height: 450px; object-fit: cover;">
+                    <img :src="value.hinh_anh" class="d-block w-100 " alt="..."
+                        style="height: 485px; object-fit: cover;">
                 </div>
             </template>
         </div>
@@ -75,12 +75,17 @@
                     <h5 class="text-uppercase text-primary fw-bold my-3">
                         <i class="fa-solid fa-notes-medical fa-lg me-2"></i>Giới thiệu
                     </h5>
-                    <h3 class="text-capitalize fw-bold mb-4">Chăm sóc sức khỏe toàn diện với công nghệ tiên tiến</h3>
+                    <h3 class="text-capitalize fw-bold mb-4">Chăm sóc thú cưng toàn diện với hệ thống quản lý PetCare
+                        hiện
+                        đại</h3>
                     <p class="fs-6 text-muted mb-4">
-                        Với hơn 20 năm kinh nghiệm trong lĩnh vực y tế, chúng tôi tự hào là địa chỉ tin cậy cho việc
-                        chăm
-                        sóc sức khỏe của bạn và gia đình. Đội ngũ bác sĩ chuyên môn cao, trang thiết bị hiện đại và quy
-                        trình khám chữa bệnh chuẩn quốc tế.
+                        PetCare là nền tảng hỗ trợ quản lý phòng khám và dịch vụ chăm sóc thú cưng một cách chuyên
+                        nghiệp,
+                        giúp kết nối chủ nuôi với đội ngũ bác sĩ thú y. Hệ thống cung cấp đầy đủ các chức năng như đặt
+                        lịch
+                        khám trực tuyến, quản lý hồ sơ thú cưng, theo dõi lịch sử khám chữa bệnh và quản lý dịch vụ
+                        nhanh
+                        chóng, mang đến trải nghiệm thuận tiện và hiệu quả.
                     </p>
                     <hr class="border border-primary border-2 opacity-75 w-75 mb-4">
                     <div class="row">
@@ -88,15 +93,15 @@
                             <ul class="list-unstyled">
                                 <li class="text-secondary mb-3 fs-6">
                                     <i class="fa-solid fa-heart-pulse text-primary me-2"></i>
-                                    <strong>50+ Bác sĩ chuyên khoa</strong>
+                                    <strong>Đội ngũ bác sĩ thú y chuyên nghiệp</strong>
                                 </li>
                                 <li class="text-secondary mb-3 fs-6">
                                     <i class="fa-solid fa-microscope text-primary me-2"></i>
-                                    <strong>Thiết bị y tế hiện đại</strong>
+                                    <strong>Đặt lịch khám nhanh chóng</strong>
                                 </li>
                                 <li class="text-secondary mb-3 fs-6">
                                     <i class="fa-solid fa-certificate text-primary me-2"></i>
-                                    <strong>Chứng nhận JCI</strong>
+                                    <strong>Theo dõi lịch sử khám chữa bệnh</strong>
                                 </li>
                             </ul>
                         </div>
@@ -108,7 +113,7 @@
                                 </li>
                                 <li class="text-secondary mb-3 fs-6">
                                     <i class="fa-solid fa-shield-alt text-primary me-2"></i>
-                                    <strong>Bảo hiểm y tế</strong>
+                                    <strong>Quản lý dịch vụ chăm sóc</strong>
                                 </li>
                                 <li class="text-secondary mb-3 fs-6">
                                     <i class="fa-solid fa-ambulance text-primary me-2"></i>
@@ -117,9 +122,6 @@
                             </ul>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-4 py-2 fw-bold">
-                        <i class="fa-solid fa-arrow-right me-2"></i>Khám phá thêm
-                    </button>
                 </div>
             </div>
 
@@ -130,9 +132,12 @@
                         <div class="row ">
                             <div class="col-lg-12 d-flex justify-content-between align-items-center my-3">
                                 <div>
-                                    <h3 class="text-capitalize fw-bold mb-1">Chuyên khoa đa dạng, chất lượng cao</h3>
-                                    <p class="text-muted fs-6 mb-0">Chúng tôi cung cấp đầy đủ các dịch vụ y tế từ cơ bản
-                                        đến chuyên sâu</p>
+                                    <h3 class="text-capitalize fw-bold mb-1">Dịch vụ đa dạng, chăm sóc toàn diện</h3>
+                                    <p class="text-muted fs-6 mb-0">Chúng tôi cung cấp đầy đủ các dịch vụ chăm sóc thú
+                                        cưng
+                                        từ khám sức khỏe, tiêm phòng, điều trị, spa đến tư vấn dinh dưỡng, đáp ứng mọi
+                                        nhu
+                                        cầu của thú cưng trong từng giai đoạn phát triển.</p>
                                 </div>
                                 <button class="btn btn-primary">Xem thêm</button>
                             </div>
@@ -182,10 +187,11 @@
                             <div class="col-lg-12 d-flex justify-content-between align-items-center my-3">
                                 <div class="">
 
-                                    <h3 class="text-capitalize fw-bold">Bác sĩ chuyên gia hàng đầu</h3>
-                                    <p class="text-muted fs-6">Đội ngũ bác sĩ giàu kinh nghiệm, được đào tạo chuyên sâu
-                                        tại các bệnh
-                                        viện uy tín</p>
+                                    <h3 class="text-capitalize fw-bold">Đội ngũ bác sĩ thú y giàu kinh nghiệm</h3>
+                                    <p class="text-muted fs-6">Đội ngũ bác sĩ thú y và nhân viên chăm sóc được đào tạo
+                                        chuyên môn, tận tâm và giàu kinh nghiệm, luôn sẵn sàng mang đến dịch vụ chất
+                                        lượng
+                                        cao và giải pháp chăm sóc sức khỏe tốt nhất cho thú cưng của bạn.</p>
                                 </div>
                                 <button class="btn btn-primary">Xem thêm</button>
                             </div>
@@ -238,14 +244,16 @@
                     <div class="card-body">
                         <div class="row mt-5 product-grid">
                             <div class="col-lg-12 text-center mb-4 ">
-                                <h3 class="text-uppercase fw-bold mt-3">Đặt lịch khám bệnh</h3>
+                                <h3 class="text-uppercase fw-bold mt-3">Đặt lịch chăm sóc thú cưng</h3>
                             </div>
                             <div class="col-md-4 mb-4">
                                 <div class="card p-4 rounded-4  h-100">
                                     <h4 class="fw-bold mb-3 ">
                                         <i class="fa-solid fa-clock me-3"></i>Giờ làm việc
                                     </h4>
-                                    <p class="mb-4">Chúng tôi phục vụ bệnh nhân với thời gian linh hoạt</p>
+                                    <p class="mb-4">Chúng tôi luôn sẵn sàng phục vụ và chăm sóc thú cưng với thời gian
+                                        linh
+                                        hoạt, giúp khách hàng dễ dàng đặt lịch theo nhu cầu.</p>
                                     <div class="border-top border-white-50 py-3">
                                         <span class="fw-semibold">Thứ 2 - Thứ 6:</span>
                                         <span class="float-end">7:30 - 18:00</span>
@@ -256,10 +264,10 @@
                                     </div>
                                     <div class="border-top border-white-50 py-3">
                                         <span class="fw-semibold">Chủ nhật:</span>
-                                        <span class="float-end text-primary fw-semibold">8:00 - 12:00</span>
+                                        <span class="float-end ">8:00 - 12:00</span>
                                     </div>
                                     <div class="border-top border-white-50 py-3">
-                                        <span class="fw-semibold">Cấp cứu:</span>
+                                        <span class="fw-semibold">Cấp cứu khẩn cấp:</span>
                                         <span class="float-end text-primary fw-semibold">24/7</span>
                                     </div>
                                 </div>
@@ -267,34 +275,44 @@
                             <div class="col-md-4 mb-4">
                                 <div class="bg-white p-4 rounded-4 shadow-sm h-100">
                                     <h4 class="fw-bold mb-4">
-                                        <i class="fa-solid fa-calendar-plus me-3 text-primary"></i>Đặt lịch khám
+                                        <i class="fa-solid fa-calendar-plus me-3 text-primary"></i>Đặt lịch chăm sóc thú
+                                        cưng
                                     </h4>
                                     <div class="mb-3">
                                         <select class="form-select bg-light border-0">
-                                            <option value="">Chọn chuyên khoa</option>
-                                            <option>
-                                                Tam than
-                                            </option>
+                                            <option value="">Chọn dịch vụ</option>
+                                            <option>Khám tổng quát</option>
+                                            <option>Tư vấn & Điều trị</option>
+                                            <option>Xét nghiệm máu</option>
+                                            <option>Xét nghiệm ký sinh trùng máu</option>
+                                            <option>Siêu âm</option>
+                                            <option>Kháng sinh đồ</option>
+                                            <option>Chẩn đoán hình ảnh (X-Quang)</option>
+                                            <option>Phẫu thuật</option>
+                                            <option>Tiêm ngừa</option>
+                                            <option>Spa & Grooming</option>
+                                            <option>Tắm & Cắt tỉa lông</option>
+                                            <option>Pet Shop</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <select class="form-select bg-light border-0">
-                                            <option value="">Chọn bác sĩ</option>
+                                            <option value="">Chọn bác sĩ thú y</option>
                                             <option>
-                                                TRUONG PHONG MAI DAM
+                                                BS. Nguyễn Văn A
                                             </option>
                                         </select>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-12">
                                             <input type="text" class="form-control bg-light border-0"
-                                                placeholder="Đơn giá khám" readonly>
+                                                placeholder="Chi phí dịch vụ" readonly>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-12">
                                             <select class="form-select bg-light border-0">
-                                                <option value="">Chọn ngày</option>
+                                                <option value="">Chọn ngày hẹn</option>
                                                 <option>2023-10-15</option>
                                             </select>
                                         </div>
@@ -302,7 +320,7 @@
                                     <div class="row mb-3">
                                         <div class="col-12">
                                             <select class="form-select bg-light border-0 mt-2">
-                                                <option value="">Chọn thời gian bắt đầu</option>
+                                                <option value="">Chọn khung giờ</option>
                                                 <option>
                                                     22/12 - 08:00 - 09:00
                                                 </option>
@@ -311,7 +329,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <textarea class="form-control bg-light border-0" rows="2"
-                                            placeholder="Lý do khám"></textarea>
+                                            placeholder="Mô tả tình trạng thú cưng hoặc ghi chú"></textarea>
                                     </div>
                                     <button class="btn btn-primary w-100 fw-bold py-3">
                                         <i class="fa-solid fa-calendar-check me-2"></i>ĐẶT LỊCH NGAY
@@ -334,7 +352,7 @@
                         <div class="mt-5">
                             <div class="row">
                                 <div class="col-lg-12 text-center mb-4">
-                                    <h3 class="text-uppercase text-primary fw-bold">Đánh giá từ bệnh nhân </h3>
+                                    <h3 class="text-uppercase text-primary fw-bold">Đánh giá từ khách hàng</h3>
                                 </div>
                             </div>
                             <div class="row">
@@ -345,14 +363,11 @@
                                                 <img src="https://img.freepik.com/free-photo/portrait-young-smiling-woman-looking-camera_23-2147965121.jpg"
                                                     alt="Patient" class="rounded-circle me-3" width="60" height="60">
                                                 <div>
-                                                    <h5 class="mb-0 fw-bold">Nguyễn Thị Anh</h5>
-                                                    <small class="text-muted">Bệnh nhân tim mạch</small>
+                                                    <h5 class="mb-0 fw-bold">Nguyễn Văn Minh</h5>
+                                                    <small class="text-muted">Chủ nuôi chó Golden Retriever</small>
                                                 </div>
                                             </div>
-                                            <p class="text-muted">"Tôi rất hài lòng với dịch vụ khám bệnh tại đây. Bác
-                                                sĩ rất tận
-                                                tâm và
-                                                chuyên nghiệp. Quy trình khám bệnh nhanh chóng và thuận tiện."</p>
+                                            <p class="text-muted">"Tôi rất hài lòng với dịch vụ tại PetCare. Bác sĩ tư vấn tận tình, quy trình đặt lịch nhanh chóng và thú cưng của tôi được chăm sóc rất chu đáo."</p>
                                             <div class="text-warning d-flex gap-2 mt-auto mb-3">
                                                 <i class="fa-solid fa-star fa-lg"></i>
                                                 <i class="fa-solid fa-star fa-lg"></i>
@@ -371,13 +386,10 @@
                                                     alt="Patient" class="rounded-circle me-3" width="60" height="60">
                                                 <div>
                                                     <h5 class="mb-0 fw-bold">Nguyễn Thị Anh</h5>
-                                                    <small class="text-muted">Bệnh nhân tim mạch</small>
+                                                    <small class="text-muted">Chủ nuôi mèo Anh Lông Ngắn</small>
                                                 </div>
                                             </div>
-                                            <p class="text-muted">"Tôi rất hài lòng với dịch vụ khám bệnh tại đây. Bác
-                                                sĩ rất tận
-                                                tâm và
-                                                chuyên nghiệp. Quy trình khám bệnh nhanh chóng và thuận tiện."</p>
+                                            <p class="text-muted">"Đội ngũ bác sĩ rất thân thiện và chuyên nghiệp. Hồ sơ khám bệnh của thú cưng được lưu trữ đầy đủ, giúp tôi dễ dàng theo dõi sức khỏe của bé."</p>
                                             <div class="text-warning d-flex gap-2 mt-auto mb-3">
                                                 <i class="fa-solid fa-star fa-lg"></i>
                                                 <i class="fa-solid fa-star fa-lg"></i>
@@ -395,14 +407,11 @@
                                                 <img src="https://img.freepik.com/free-photo/portrait-young-smiling-woman-looking-camera_23-2147965121.jpg"
                                                     alt="Patient" class="rounded-circle me-3" width="60" height="60">
                                                 <div>
-                                                    <h5 class="mb-0 fw-bold">Nguyễn Thị Anh</h5>
-                                                    <small class="text-muted">Bệnh nhân tim mạch</small>
+                                                    <h5 class="mb-0 fw-bold">Lê Hoàng Nam</h5>
+                                                    <small class="text-muted">Chủ nuôi chó Poodle</small>
                                                 </div>
                                             </div>
-                                            <p class="text-muted">"Tôi rất hài lòng với dịch vụ khám bệnh tại đây. Bác
-                                                sĩ rất tận
-                                                tâm và
-                                                chuyên nghiệp. Quy trình khám bệnh nhanh chóng và thuận tiện."</p>
+                                            <p class="text-muted">"Dịch vụ tiêm phòng và spa rất chất lượng. Nhân viên nhiệt tình, môi trường sạch sẽ và tôi sẽ tiếp tục sử dụng dịch vụ của PetCare trong thời gian tới."</p>
                                             <div class="text-warning d-flex gap-2 mt-auto mb-3">
                                                 <i class="fa-solid fa-star fa-lg"></i>
                                                 <i class="fa-solid fa-star fa-lg"></i>
@@ -428,7 +437,7 @@
                         <div class="col-lg-12 text-center mb-4">
                             <h3 class="text-uppercase text-primary fw-bold">Câu hỏi thường gặp
                             </h3>
-                            <p class="text-muted fs-6">Giải đáp thắc mắc của bạn</p>
+                            <p class="text-muted fs-6">Những câu hỏi phổ biến khi sử dụng dịch vụ tại PetCare</p>
                         </div>
                     </div>
                     <div class="row">
@@ -438,20 +447,13 @@
                                     <h2 class="accordion-header" id="faq1">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapse1">
-                                            Làm thế nào để đặt lịch khám bệnh?
+                                            1. Làm thế nào để đặt lịch cho thú cưng?
                                         </button>
                                     </h2>
                                     <div id="collapse1" class="accordion-collapse collapse"
                                         data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
-                                            Bạn có thể đặt lịch khám bệnh qua nhiều cách: gọi điện thoại, đặt lịch trực
-                                            tuyến
-                                            trên
-                                            website, hoặc đến trực tiếp phòng khám. Chúng tôi sẽ sắp xếp lịch hẹn phù
-                                            hợp
-                                            với
-                                            thời
-                                            gian của bạn.
+                                            Bạn có thể đặt lịch trực tiếp trên website bằng cách chọn dịch vụ, bác sĩ thú y, ngày và khung giờ mong muốn. Sau khi xác nhận, hệ thống sẽ lưu lịch hẹn và gửi thông tin đến bạn.
                                         </div>
                                     </div>
                                 </div>
@@ -459,21 +461,13 @@
                                     <h2 class="accordion-header" id="faq2">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapse2">
-                                            Chi phí khám bệnh như thế nào?
+                                            2. PetCare cung cấp những dịch vụ nào?
                                         </button>
                                     </h2>
                                     <div id="collapse2" class="accordion-collapse collapse"
                                         data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
-                                            Chi phí khám bệnh phụ thuộc vào loại dịch vụ và chuyên khoa. Chúng tôi có
-                                            bảng
-                                            giá
-                                            công
-                                            khai và minh bạch. Bạn có thể liên hệ để được tư vấn chi tiết về chi phí
-                                            trước
-                                            khi
-                                            đặt
-                                            lịch.
+                                            PetCare cung cấp nhiều dịch vụ như khám tổng quát, tư vấn và điều trị, xét nghiệm máu, xét nghiệm ký sinh trùng máu, siêu âm, tiêm ngừa, phẫu thuật, chăm sóc thú cưng và các sản phẩm từ Pet Shop.
                                         </div>
                                     </div>
                                 </div>
@@ -481,17 +475,13 @@
                                     <h2 class="accordion-header" id="faq3">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapse3">
-                                            Có dịch vụ khám ngoài giờ không?
+                                            3. Làm sao để theo dõi lịch sử khám của thú cưng?
                                         </button>
                                     </h2>
                                     <div id="collapse3" class="accordion-collapse collapse"
                                         data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
-                                            Có, chúng tôi cung cấp dịch vụ khám ngoài giờ cho các trường hợp khẩn cấp.
-                                            Vui
-                                            lòng
-                                            liên
-                                            hệ số điện thoại khẩn cấp để được hỗ trợ nhanh chóng.
+                                            Sau khi đăng nhập, bạn có thể xem toàn bộ lịch sử khám, kết quả xét nghiệm, lịch tiêm phòng và các dịch vụ đã sử dụng trong hồ sơ của thú cưng.
                                         </div>
                                     </div>
                                 </div>
@@ -499,20 +489,41 @@
                                     <h2 class="accordion-header" id="faq4">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapse4">
-                                            Có cần mang gì khi đi khám bệnh?
+                                            4. Cần chuẩn bị gì khi đưa thú cưng đến phòng khám?
                                         </button>
                                     </h2>
                                     <div id="collapse4" class="accordion-collapse collapse"
                                         data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
-                                            Bạn nên mang theo CMND/CCCD, sổ khám bệnh (nếu có), các kết quả xét nghiệm
-                                            gần
-                                            đây,
-                                            và
-                                            danh sách thuốc đang sử dụng. Điều này sẽ giúp bác sĩ có thông tin đầy đủ để
-                                            chẩn
-                                            đoán
-                                            chính xác.
+                                            Bạn nên mang theo sổ tiêm phòng hoặc hồ sơ khám trước đó (nếu có), đồng thời cung cấp thông tin về tình trạng sức khỏe, chế độ ăn uống và các biểu hiện bất thường của thú cưng để bác sĩ đánh giá chính xác hơn.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item border-0 shadow-sm mb-3">
+                                    <h2 class="accordion-header" id="faq5">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapse5">
+                                            5. Tôi có thể hủy hoặc thay đổi lịch hẹn không?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse5" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Có. Bạn có thể thay đổi hoặc hủy lịch hẹn trước thời gian khám thông qua tài khoản cá nhân hoặc liên hệ trực tiếp với PetCare để được hỗ trợ nhanh chóng.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item border-0 shadow-sm mb-3">
+                                    <h2 class="accordion-header" id="faq6">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapse6">
+                                            6. PetCare có hỗ trợ cấp cứu cho thú cưng không?
+                                        </button>
+                                    </h2>
+                                    <div id="collapse6" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            Có. PetCare luôn sẵn sàng tiếp nhận các trường hợp khẩn cấp trong giờ làm việc và hỗ trợ tư vấn nhanh qua hotline để đảm bảo thú cưng được chăm sóc kịp thời.
                                         </div>
                                     </div>
                                 </div>
@@ -522,36 +533,40 @@
                 </div>
             </div>
         </div>
+
+
+
+
     </div>
 </template>
 <script setup>
-import banner0 from '@/assets/images/banner0.jpg'
-import banner1 from '@/assets/images/banner1.jpg'
-import banner2 from '@/assets/images/banner2.jpg'
-import banner3 from '@/assets/images/banner3.jpg'
+import bia1 from '@/assets/images/bia1.png'
+import bia2 from '@/assets/images/bia2.png'
+import bia3 from '@/assets/images/bia3.png'
+import bia4 from '@/assets/images/bia4.jpg'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const datLichKhanCap = () => {
-    router.push('/ho-so')
+    router.push('/dat-kham')
 
 }
 const xemLichSu = () => {
-    router.push('/lich-su')
+    router.push('/lich-hen')
 }
 
 const list_slide = [
     {
-        hinh_anh: banner0
+        hinh_anh: bia1
     },
     {
-        hinh_anh: banner1
+        hinh_anh: bia2
     },
     {
-        hinh_anh: banner2
+        hinh_anh: bia3
     },
     {
-        hinh_anh: banner3
+        hinh_anh: bia4
     }
 ]
 // import axios from 'axios';
