@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 const routes = [
 
-    // TRANG CHỦ
+    // TRANG CHỦ LỄ TÂN
     {
         path: "/",
         component: ()=> import("../components/Letan/TrangChu/index.vue"),
@@ -9,6 +9,19 @@ const routes = [
             layout: "letan-layout"
         }
     },
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ĐĂNG NHẬP ADMIN
     {
@@ -60,10 +73,10 @@ const routes = [
     },
     {
     path: "/admin/ho-so-benh-an",
-    component: () => import("../components/Admin/QuanLyPetCare/HoSoPetCare.vue"),
-    meta: {
-      layout: "admin-layout",
-    },
+        component: () => import("../components/Admin/QuanLyPetCare/HoSoPetCare.vue"),
+        meta: {
+        layout: "admin-layout",
+        },
     // beforeEnter: checkAdmin,
     },
     {
@@ -192,6 +205,13 @@ const routes = [
         },
     },
     {
+        path: "/hinh-anh",
+        component: () => import("../components/Letan/HinhAnh/index.vue"),
+        meta: {
+        layout: "letan-layout",
+        },
+    },
+    {
         path: "/dat-kham",
         component: () => import("../components/Letan/DatKham/index.vue"),  
         meta: {
@@ -213,7 +233,7 @@ const routes = [
             },
     },
     {
-                path: "/chuyen-khoa-Petcare",
+                path: "/chuyen-khoa",
                 component: () => import("../components/Letan/ChuyenKhoa/index.vue"),  
                 meta: {
                 layout: "letan-layout",

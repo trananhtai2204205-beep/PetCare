@@ -10,10 +10,14 @@
                                 <div class="position-relative m-4 ">
                                     <div class="progress" style="height: 4px;">
                                         <div class="progress-bar bg-primary" role="progressbar"
-                                            ></div>
+                                            :style="{ width: progressWidth + '%' }" aria-valuemin="0"
+                                            aria-valuemax="100"></div>
                                     </div>
-                                    <div >
-                                        <i ></i>
+                                    <div v-for="(step, index) in steps" :key="index"
+                                        class="position-absolute top-0 translate-middle d-flex align-items-center justify-content-center rounded-circle border border-3 border-white"
+                                        :class="getStepClass(index + 1)"
+                                        :style="{ left: (index * 33.33) + '%', width: '50px', height: '50px' }">
+                                        <i :class="step.icon"></i>
                                     </div>
                                 </div>
                             </div>
@@ -35,22 +39,24 @@
                                                     Chọn chuyên khoa <span class="text-danger">*</span>
                                                 </label>
                                                 <select class="form-select form-select-lg"
-                                                    >
+                                                    v-model="booking.departmentId" @change="loadDoctors">
                                                     <option value="">-- Chọn chuyên khoa --</option>
-                                                    <option >
-                                                        3
+                                                    <option v-for="dept in departments" :key="dept.id" :value="dept.id">
+                                                        {{ dept.ten_chuyen_khoa }}
                                                     </option>
                                                 </select>
                                             </div>
 
-                                            <div class="mb-4" >
+                                            <div class="mb-4" v-if="booking.departmentId && filteredDoctors.length > 0">
                                                 <label class="form-label fw-semibold">
                                                     Chọn bác sĩ <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="row">
-                                                    <div class="col-md-6 mb-3" >
+                                                    <div class="col-md-6 mb-3" v-for="doctor in filteredDoctors"
+                                                        :key="doctor.id">
                                                         <div class="card h-100 shadow-sm"
-                                                            
+                                                            :class="{ 'border-primary border-3': booking.doctorId === doctor.id }"
+                                                            @click="selectDoctor(doctor)"
                                                             style="cursor: pointer; transition: all 0.2s;">
                                                             <div class="card-body p-3">
                                                                 <div class="d-flex align-items-center">
@@ -63,14 +69,17 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="ms-3">
-                                                                        <h6 class="fw-bold mb-1">1</h6>
-                                                                        <p class="text-muted small mb-1">2</p>
+                                                                        <h6 class="fw-bold mb-1">{{ doctor.ho_ten }}
+                                                                        </h6>
+                                                                        <p class="text-muted small mb-1">{{
+                                                                            doctor.chuc_danh }}</p>
                                                                         <small class="text-success">
-                                                                            <i class="fas fa-star me-1"></i>3/5
+                                                                            <i class="fas fa-star me-1"></i>{{
+                                                                                doctor.so_nam_kinh_nghiem }} năm kinh nghiệm
                                                                         </small>
                                                                     </div>
                                                                 </div>
-                                                                <div class="mt-2" >
+                                                                <div class="mt-2" v-if="booking.doctorId === doctor.id">
                                                                     <small class="text-primary">
                                                                         <i class="fas fa-check-circle me-1"></i>Đã chọn
                                                                     </small>
@@ -95,17 +104,20 @@
                                                         Chọn ngày khám <span class="text-danger">*</span>
                                                     </label>
                                                     <input type="date" class="form-control form-control-lg"
-                                                        >
+                                                        v-model="booking.date" @change="loadTimeSlots" :min="minDate">
                                                 </div>
 
-                                                <div class="col-md-6 mb-4">
+                                                <div class="col-md-6 mb-4" v-if="booking.date">
                                                     <label class="form-label fw-semibold">
                                                         Chọn giờ khám <span class="text-danger">*</span>
                                                     </label>
                                                     <div class="d-flex flex-wrap gap-2 mt-2">
-                                                        <button >
-                                                            2
-                                                            <small class="d-block" >
+                                                        <button v-for="slot in timeSlots" :key="slot.time" type="button"
+                                                            class="btn btn-sm" :class="getTimeSlotClass(slot)"
+                                                            :disabled="!slot.available"
+                                                            @click="selectTimeSlot(slot.time)">
+                                                            {{ slot.time }}
+                                                            <small class="d-block" v-if="!slot.available">
                                                                 (Đã đầy)
                                                             </small>
                                                         </button>
@@ -113,9 +125,11 @@
                                                 </div>
                                             </div>
 
-                                            <div class="alert alert-info" >
+                                            <div class="alert alert-info" v-if="selectedDoctor">
                                                 <i class="fas fa-info-circle me-2"></i>
-                                                <strong>Bác sĩ đã chọn:</strong> 1
+                                                <strong>Bác sĩ đã chọn:</strong> {{ selectedDoctor.ho_ten }} - {{
+                                                    selectedDepartment.ten_chuyen_khoa
+                                                }}
                                             </div>
                                         </div>
 
@@ -132,7 +146,7 @@
                                                         Họ và tên <span class="text-danger">*</span>
                                                     </label>
                                                     <input type="text" class="form-control"
-                                                       
+                                                        v-model="booking.patientName"
                                                         placeholder="Nhập họ và tên đầy đủ">
                                                 </div>
 
@@ -140,24 +154,24 @@
                                                     <label class="form-label fw-semibold">
                                                         Số điện thoại <span class="text-danger">*</span>
                                                     </label>
-                                                    <input type="tel" class="form-control" 
+                                                    <input type="tel" class="form-control" v-model="booking.phone"
                                                         placeholder="0987654321">
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label fw-semibold">Email</label>
-                                                    <input type="email" class="form-control" 
+                                                    <input type="email" class="form-control" v-model="booking.email"
                                                         placeholder="email@example.com">
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label fw-semibold">Ngày sinh</label>
-                                                    <input type="date" class="form-control" >
+                                                    <input type="date" class="form-control" v-model="booking.birthDate">
                                                 </div>
 
                                                 <div class="col-12 mb-3">
                                                     <label class="form-label fw-semibold">Địa chỉ</label>
-                                                    <input type="text" class="form-control" 
+                                                    <input type="text" class="form-control" v-model="booking.address"
                                                         placeholder="Nhập địa chỉ đầy đủ">
                                                 </div>
 
@@ -165,21 +179,21 @@
                                                     <label class="form-label fw-semibold">
                                                         Lý do khám <span class="text-danger">*</span>
                                                     </label>
-                                                    <textarea class="form-control" rows="4" 
+                                                    <textarea class="form-control" rows="4" v-model="booking.reason"
                                                         placeholder="Mô tả chi tiết triệu chứng và lý do khám bệnh"></textarea>
                                                 </div>
 
                                                 <div class="col-12 mb-3">
                                                     <label class="form-label fw-semibold">Số thẻ bảo hiểm y tế</label>
                                                     <input type="text" class="form-control"
-                                                       
+                                                        v-model="booking.insuranceNumber"
                                                         placeholder="Nhập số thẻ BHYT (nếu có)">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Step 4: Confirmation -->
-                                        <div v-show="currentStep === 4">
+                                        <!-- <div v-show="currentStep === 4">
                                             <h4 class="fw-bold mb-4">
                                                 <i class="fas fa-check-circle text-primary me-2"></i>
                                                 Bước 4: Xác nhận thông tin
@@ -195,28 +209,28 @@
                                                     <div class="row">
                                                         <div class="col-md-6 mb-2">
                                                             <strong>Chuyên khoa:</strong>
-                                                            <div class="text-primary">2
+                                                            <div class="text-primary">{{ selectedDepartment?.ten_chuyen_khoa  }}
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 mb-2">
                                                             <strong>Bác sĩ:</strong>
-                                                            <div class="text-primary">3</div>
+                                                            <div class="text-primary">{{ selectedDoctor?.ho_ten  }}</div>
                                                         </div>
                                                         <div class="col-md-6 mb-2">
                                                             <strong>Ngày khám:</strong>
-                                                            <div class="text-primary">2
+                                                            <div class="text-primary">{{ formatDate(booking.ngay_sinh) }}
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 mb-2">
                                                             <strong>Giờ khám:</strong>
-                                                            <div class="text-primary">1</div>
+                                                            <div class="text-primary">{{ booking.time }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
-                                            <!-- Patient Info -->
-                                            <div class="card bg-light">
+                                        <!-- Patient Info -->
+                                        <!-- <div class="card bg-light">
                                                 <div class="card-header bg-info text-white">
                                                     <h5 class="mb-0 text-white">
                                                         <i class="fas fa-user me-2"></i>
@@ -227,55 +241,55 @@
                                                     <div class="row">
                                                         <div class="col-md-6 mb-2">
                                                             <strong>Họ và tên:</strong>
-                                                            <div>2</div>
+                                                            <div>{{ booking.patientName }}</div>
                                                         </div>
                                                         <div class="col-md-6 mb-2">
                                                             <strong>Số điện thoại:</strong>
-                                                            <div>3</div>
+                                                            <div>{{ booking.phone }}</div>
                                                         </div>
                                                         <div class="col-md-6 mb-2">
                                                             <strong>Email:</strong>
-                                                            <div>2</div>
+                                                            <div>{{ booking.email || 'Không có' }}</div>
                                                         </div>
                                                         <div class="col-md-6 mb-2">
                                                             <strong>Ngày sinh:</strong>
-                                                            <div>1</div>
+                                                            <div>{{ formatDate(booking.birthDate) || 'Không có' }}</div>
                                                         </div>
                                                         <div class="col-12 mb-2">
                                                             <strong>Địa chỉ:</strong>
-                                                            <div>1</div>
+                                                            <div>{{ booking.address || 'Không có' }}</div>
                                                         </div>
                                                         <div class="col-12 mb-2">
                                                             <strong>Lý do khám:</strong>
-                                                            <div class="text-break">2</div>
+                                                            <div class="text-break">{{ booking.reason }}</div>
                                                         </div>
                                                         <div class="col-12">
                                                             <strong>Số BHYT:</strong>
-                                                            <div>3</div>
+                                                            <div>{{ booking.insuranceNumber || 'Không có' }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
 
                                         <!-- Navigation Buttons -->
                                         <div class="d-flex justify-content-between mt-4">
                                             <button type="button" class="btn btn-outline-secondary" @click="prevStep"
-                                                >
+                                                v-if="currentStep > 1">
                                                 <i class="fas fa-arrow-left me-2"></i>Quay lại
                                             </button>
 
                                             <button type="button" class="btn btn-primary ms-auto" @click="nextStep"
-                                                >
+                                                v-if="currentStep < 4" :disabled="!canProceed">
                                                 Tiếp tục<i class="fas fa-arrow-right ms-2"></i>
                                             </button>
 
                                             <button type="button" class="btn btn-success ms-auto" @click="submitBooking"
-                                                >
+                                                v-if="currentStep === 4" :disabled="isSubmitting">
                                                 <i class="fas fa-check me-2"></i>
-                                                <span >Đang xử lý...</span>
-                                                <span >Xác nhận đặt lịch</span>
+                                                <span v-if="isSubmitting">Đang xử lý...</span>
+                                                <span v-else>Xác nhận đặt lịch</span>
                                             </button>
                                         </div>
                                     </div>
@@ -453,7 +467,7 @@
                         qua SMS và email trong vòng 5 phút.
                     </p>
                     <div class="alert alert-info">
-                        <strong>Mã đặt lịch:</strong> #
+                        <strong>Mã đặt lịch:</strong> #{{ bookingCode }}
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -470,230 +484,228 @@
 </template>
 
 <script>
-// export default {
-//     data() {
-//         return {
-//             currentStep: 1,
-//             isSubmitting: false,
-//             bookingCode: '',
-//             booking: {
-//                 departmentId: '',
-//                 doctorId: '',
-//                 date: '',
-//                 time: '',
-//                 patientName: '',
-//                 phone: '',
-//                 email: '',
-//                 birthDate: '',
-//                 address: '',
-//                 reason: '',
-//                 insuranceNumber: ''
-//             },
-//             steps: [
-//                 {
-//                     icon: 'fa-solid fa-stethoscope',
-//                     title: 'Bước 1: Chọn chuyên khoa và bác sĩ',
-//                     description: 'Chọn chuyên khoa phù hợp với nhu cầu khám và bác sĩ mong muốn'
-//                 },
-//                 {
-//                     icon: 'fas fa-calendar-alt',
-//                     title: 'Bước 2: Chọn thời gian',
-//                     description: 'Chọn ngày và giờ khám phù hợp với lịch của bạn'
-//                 },
-//                 {
-//                     icon: 'fas fa-clipboard-list',
-//                     title: 'Bước 3: Điền thông tin',
-//                     description: 'Cung cấp thông tin cá nhân và lý do khám'
-//                 },
-//                 {
-//                     icon: 'fas fa-check',
-//                     title: 'Bước 4: Xác nhận',
-//                     description: 'Kiểm tra và xác nhận thông tin đặt lịch'
-//                 }
-//             ],
-//             departments: [
-//                 { id: 1, name: 'Khoa Tim mạch' },
-//                 { id: 2, name: 'Khoa Nội tổng quát' },
-//                 { id: 3, name: 'Khoa Nhi' },
-//                 { id: 4, name: 'Khoa Sản phụ khoa' },
-//                 { id: 5, name: 'Khoa Ngoại tổng quát' },
-//                 { id: 6, name: 'Khoa Da liễu' }
-//             ],
-//             doctors: [],
-//             timeSlots: [
-//                 { time: '08:00', available: true },
-//                 { time: '08:30', available: true },
-//                 { time: '09:00', available: false },
-//                 { time: '09:30', available: true },
-//                 { time: '10:00', available: true },
-//                 { time: '10:30', available: false },
-//                 { time: '14:00', available: true },
-//                 { time: '14:30', available: true },
-//                 { time: '15:00', available: true },
-//                 { time: '15:30', available: false },
-//                 { time: '16:00', available: true },
-//                 { time: '16:30', available: true }
-//             ],
-//             importantNotes: [
-//                 {
-//                     id: 1,
-//                     icon: 'fas fa-clock',
-//                     text: 'Đến trước giờ hẹn 15-30 phút để làm thủ tục'
-//                 },
-//                 {
-//                     id: 2,
-//                     icon: 'fas fa-id-card',
-//                     text: 'Mang theo CMND/CCCD và thẻ BHYT (nếu có)'
-//                 },
-//                 {
-//                     id: 3,
-//                     icon: 'fas fa-file-medical',
-//                     text: 'Mang theo các kết quả xét nghiệm, chẩn đoán trước đây (nếu có)'
-//                 },
-//                 {
-//                     id: 4,
-//                     icon: 'fas fa-edit',
-//                     text: 'Có thể thay đổi lịch hẹn trước 24 giờ'
-//                 }
-//             ]
-//         }
-//     },
-//     computed: {
-//         progressWidth() {
-//             return ((this.currentStep - 1) / 3) * 100;
-//         },
-//         minDate() {
-//             const today = new Date();
-//             return today.toISOString().split('T')[0];
-//         },
-//         selectedDepartment() {
-//             return this.departments.find(d => d.id === this.booking.departmentId);
-//         },
-//         selectedDoctor() {
-//             return this.doctors.find(d => d.id === this.booking.doctorId);
-//         },
-//         canProceed() {
-//             switch (this.currentStep) {
-//                 case 1:
-//                     return this.booking.departmentId && this.booking.doctorId;
-//                 case 2:
-//                     return this.booking.date && this.booking.time;
-//                 case 3:
-//                     return this.booking.patientName &&
-//                         this.booking.phone &&
-//                         this.booking.reason;
-//                 default:
-//                     return true;
-//             }
-//         }
-//     },
-//     methods: {
-//         getStepClass(step) {
-//             return {
-//                 'bg-primary text-white': step <= this.currentStep,
-//                 'bg-light text-muted': step > this.currentStep
-//             };
-//         },
-//         getTimeSlotClass(slot) {
-//             if (!slot.available) {
-//                 return 'btn-secondary';
-//             }
-//             return this.booking.time === slot.time ? 'btn-primary' : 'btn-outline-primary';
-//         },
-//         loadDoctors() {
-//             // Simulate API call
-//             const doctorsByDept = {
-//                 1: [ // Tim mạch
-//                     { id: 1, name: 'BS. Nguyễn Văn An', position: 'Trưởng khoa Tim mạch', rating: 4.8 },
-//                     { id: 2, name: 'BS. Trần Thị Bình', position: 'Bác sĩ chuyên khoa I', rating: 4.7 }
-//                 ],
-//                 2: [ // Nội tổng quát
-//                     { id: 3, name: 'BS. Lê Minh Châu', position: 'Phó trưởng khoa', rating: 4.9 },
-//                     { id: 4, name: 'BS. Phạm Văn Dũng', position: 'Bác sĩ chuyên khoa II', rating: 4.6 }
-//                 ],
-//                 3: [ // Nhi
-//                     { id: 5, name: 'BS. Hoàng Thị Ê', position: 'Trưởng khoa Nhi', rating: 4.9 },
-//                     { id: 6, name: 'BS. Nguyễn Văn Phú', position: 'Bác sĩ chuyên khoa I', rating: 4.5 }
-//                 ]
-//             };
+import baseRequestLeTan from '../../../core/baseRequestLeTan';
+export default {
+    data() {
+        return {
+            currentStep: 1,
+            isSubmitting: false,
+            bookingCode: "",
 
-//             this.doctors = doctorsByDept[this.booking.departmentId] || [];
-//             this.booking.doctorId = ''; // Reset doctor selection
-//         },
-//         selectDoctor(doctor) {
-//             this.booking.doctorId = doctor.id;
-//         },
-//         loadTimeSlots() {
-//             // Simulate API call to get available time slots for selected date
-//             console.log('Loading time slots for:', this.booking.date);
-//             // In real app, this would filter timeSlots based on date and doctor availability
-//         },
-//         selectTimeSlot(time) {
-//             this.booking.time = time;
-//         },
-//         formatDate(dateString) {
-//             if (!dateString) return '';
-//             const options = {
-//                 weekday: 'long',
-//                 year: 'numeric',
-//                 month: 'long',
-//                 day: 'numeric'
-//             };
-//             return new Date(dateString).toLocaleDateString('vi-VN', options);
-//         },
-//         prevStep() {
-//             if (this.currentStep > 1) {
-//                 this.currentStep--;
-//             }
-//         },
-//         nextStep() {
-//             if (this.currentStep < 4 && this.canProceed) {
-//                 this.currentStep++;
-//             }
-//         },
-//         async submitBooking() {
-//             this.isSubmitting = true;
+            booking: {
+                departmentId: "",
+                doctorId: "",
+                date: "",
+                time: "",
+                patientName: "",
+                phone: "",
+                email: "",
+                birthDate: "",
+                address: "",
+                reason: "",
+                insuranceNumber: ""
+            },
+            timeSlots: [],
+            departments: [],
+            doctors: [],
+            services: [],
+            petTypes: [],
+            filteredDoctors: [],
+            selectedDoctor: null,
+            selectedDepartment: null
+        }
+    },
+    mounted() {
+        this.loadData();
+        this.loadDoctors();
+    },
+    computed: {
+        progressWidth() {
+            return ((this.currentStep - 1) / 3) * 100;
+        },
+        minDate() {
+            const today = new Date();
+            return today.toISOString().split('T')[0];
+        },
+        selectedDepartment() {
+            return this.departments.find(d => d.id === this.booking.departmentId);
+        },
+        selectedDoctor() {
+            return this.doctors.find(d => d.id === this.booking.doctorId);
+        },
+        canProceed() {
+            switch (this.currentStep) {
+                case 1:
+                    return this.booking.departmentId && this.booking.doctorId;
+                case 2:
+                    return this.booking.date && this.booking.time;
+                case 3:
+                    return this.booking.patientName &&
+                        this.booking.phone &&
+                        this.booking.reason;
+                default:
+                    return true;
+            }
+        }
+    },
+    methods: {
+        loadData() {
+            baseRequestLeTan.get('le-tan/infomation/data')
+                .then((res) => {
+                    console.log(res.data);
+                    this.departments = res.data.data.chuyen_khoa;
+                    this.doctors = res.data.data.bac_si;
+                    this.services = res.data.data.dich_vu;
+                    this.petTypes = res.data.data.loai_thu_cung;
+                    console.log(this.departments);
+                    console.log(this.doctors);
+                })
+                .catch((err) => {
+                    console.log(err);
 
-//             try {
-//                 // Simulate API call
-//                 await new Promise(resolve => setTimeout(resolve, 2000));
+                    if (err.response && err.response.data.errors) {
+                        const listErr = err.response.data.errors;
+                        Object.values(listErr).forEach((error) => {
+                            this.$toast.error(error[0]);
+                        });
+                    } else {
+                        this.$toast.error("Có lỗi xảy ra!");
+                    }
+                });
+        },
+        prevStep() {
+            if (this.currentStep > 1) {
+                this.currentStep--;
+            }
+        },
+        nextStep() {
+            if (this.currentStep < 4 && this.canProceed) {
+                this.currentStep++;
+            }
+        },
+        getTimeSlotClass(slot) {
+            if (!slot.available) {
+                return "btn-outline-secondary";
+            }
 
-//                 // Generate booking code
-//                 this.bookingCode = 'BK' + Date.now().toString().slice(-6);
+            return this.booking.time === slot.time
+                ? "btn-primary"
+                : "btn-outline-primary";
+        },
+        loadTimeSlots() {
+            if (!this.booking.doctorId || !this.booking.date) {
+                return;
+            }
 
-//                 // Show success modal
-//                 const modal = new bootstrap.Modal(document.getElementById('successModal'));
-//                 modal.show();
+            baseRequestLeTan
+                .get(
+                    `le-tan/lich-lam/data?id_bac_si=${this.booking.doctorId}&ngay=${this.booking.date}`
+                )
+                .then((res) => {
+                    console.log(res.data);
 
-//             } catch (error) {
-//                 alert('Có lỗi xảy ra khi đặt lịch. Vui lòng thử lại sau.');
-//             } finally {
-//                 this.isSubmitting = false;
-//             }
-//         },
-//         resetForm() {
-//             this.currentStep = 1;
-//             this.booking = {
-//                 departmentId: '',
-//                 doctorId: '',
-//                 date: '',
-//                 time: '',
-//                 patientName: '',
-//                 phone: '',
-//                 email: '',
-//                 birthDate: '',
-//                 address: '',
-//                 reason: '',
-//                 insuranceNumber: ''
-//             };
-//             this.doctors = [];
+                    // Chuyển dữ liệu API thành danh sách giờ
+                    this.timeSlots = [];
 
-//             const modal = bootstrap.Modal.getInstance(document.getElementById('successModal'));
-//             modal.hide();
-//         },
-//         goHome() {
-//             window.location.href = '/';
-//         }
-//     }
-// }
+                    res.data.data.forEach(item => {
+
+                        let start = item.thoi_gian_bat_dau.substring(0, 5);
+                        let end = item.thoi_gian_ket_thuc.substring(0, 5);
+
+                        let current = start;
+
+                        while (current < end) {
+
+                            this.timeSlots.push({
+                                time: current,
+                                available: true
+                            });
+
+                            let h = parseInt(current.split(":")[0]);
+                            let m = parseInt(current.split(":")[1]);
+
+                            m += 30;
+
+                            if (m >= 60) {
+                                h++;
+                                m = 0;
+                            }
+
+                            current =
+                                String(h).padStart(2, "0") +
+                                ":" +
+                                String(m).padStart(2, "0");
+                        }
+                    });
+
+                    console.log(this.timeSlots);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    this.timeSlots = [];
+                });
+        },
+        selectTimeSlot(time) {
+            this.booking.time = time;
+        },
+        formatDate(dateString) {
+            if (!dateString) return '';
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            return new Date(dateString).toLocaleDateString('vi-VN', options);
+        },
+        loadDoctors() {
+            this.booking.doctorId = "";
+            this.filteredDoctors = [];
+
+            console.log("Chuyên khoa:", this.booking.departmentId);
+
+            const config = {
+                params: {
+                    id_chuyen_khoa: this.booking.departmentId
+                }
+            };
+
+            console.log("Config gửi đi:", config);
+
+            baseRequestLeTan
+                .get(`le-tan/infomation/data?id_chuyen_khoa=${this.booking.departmentId}`)
+                .then((res) => {
+                    console.log("Response:", res);
+
+                    console.log("Danh sách bác sĩ:", res.data.data.bac_si);
+
+                    this.filteredDoctors = res.data.data.bac_si;
+                    this.selectedDepartment = this.departments.find(
+                        item => item.id == this.booking.departmentId
+                    );
+
+
+                    console.log("filteredDoctors:", this.filteredDoctors);
+                })
+                .catch((err) => {
+                    console.error(err);
+
+                    if (err.response) {
+                        console.log(err.response.data);
+                    }
+                });
+        },
+        selectDoctor(doctor) {
+            this.booking.doctorId = doctor.id;
+            this.selectedDoctor = doctor;
+
+            if (this.booking.date) {
+                this.loadTimeSlots();
+            }
+        }
+
+
+
+    }
+}
 </script>
