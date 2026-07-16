@@ -1,65 +1,69 @@
-# 🐾 PetCare — Hướng Dẫn Cài Đặt & Chạy Dự Án
+# 🐾 Hệ Thống Quản Lý Phòng Khám Thú Y — PetCare
 
-## 📌 Giới thiệu
-
-**PetCare** là hệ thống quản lý phòng khám thú y gồm 3 vai trò:
-- 🧑‍💼 **Admin** — Quản lý bác sĩ, chuyên khoa, phòng khám, phân quyền, thống kê
-- 👨‍⚕️ **Bác sĩ** — Xem lịch hẹn, lịch cá nhân, quản lý hồ sơ
-- 🧑‍💻 **Lễ tân / Khách** — Đặt khám, xem bác sĩ, chuyên khoa, tin tức
+Dự án PetCare là hệ thống quản lý phòng khám thú y được xây dựng với kiến trúc tách biệt hoàn toàn giữa **Frontend (Vue 3)** và **Backend (Laravel API)**. 
 
 ---
 
-## 🗂️ Cấu trúc dự án
+## 📊 Trạng Thái Hệ Thống (CI/CD)
 
+* **GitHub Actions**: Tích hợp quy trình kiểm tra build tự động.
+* **SonarCloud Quality Gate**: Tự động phân tích chất lượng code, lỗi bảo mật và code smells.
+
+---
+
+## 🗂️ Cấu Trúc Thư Mục Dự Án
+
+Dự án được phân chia thành 2 phần độc lập:
 ```
-PetCare/          ← Frontend (Vue 3 + Vite)
-PetCare-BE/       ← Backend  (Laravel + MySQL)
+📂 PetCare/                              ← Mã nguồn Frontend (Vue 3 + Vite)
+📂 Be-PetCare--feature-develop/          ← Mã nguồn Backend (Laravel 12 + MySQL)
 ```
 
 ---
 
-## ⚙️ Yêu cầu hệ thống
+## ⚙️ Yêu Cầu Cài Đặt Hệ Thống
 
-| Công cụ | Phiên bản |
-|---------|-----------|
-| Node.js | >= 22.x   |
-| npm     | >= 10.x   |
-| PHP     | >= 8.x    |
-| Composer| >= 2.x    |
-| MySQL   | >= 8.x    |
-| XAMPP   | Bất kỳ (có MySQL) |
+Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đặt các công cụ sau:
+* **Node.js**: Phiên bản `18.x` hoặc `>= 22.x`
+* **PHP**: Phiên bản `>= 8.2` (Khuyên dùng PHP 8.4)
+* **Composer**: Phiên bản `>= 2.x`
+* **MySQL**: Phiên bản `>= 8.x` (Hoặc dùng MySQL tích hợp sẵn trong XAMPP / Homebrew)
 
 ---
 
-## 🖥️ PHẦN 1 — BACKEND (Laravel)
+## 🖥️ PHẦN 1: HƯỚNG DẪN CÀI ĐẶT BACKEND (Laravel)
 
-### Bước 1: Vào thư mục Backend
+Di chuyển vào thư mục backend và thực hiện các bước cấu hình:
 
+### 1. Di chuyển vào thư mục Backend
 ```bash
-cd PetCare-BE
+cd Be-PetCare--feature-develop
 ```
 
-### Bước 2: Cài đặt dependencies PHP
-
+### 2. Cài đặt các thư viện PHP
 ```bash
 composer install
 ```
 
-### Bước 3: Tạo file `.env`
-
+### 3. Tạo file cấu hình môi trường `.env`
+Tạo file `.env` từ file mẫu `.env.example`:
 ```bash
 cp .env.example .env
 ```
 
-### Bước 4: Cấu hình file `.env`
+### 4. Tạo mã khóa ứng dụng (Application Key)
+```bash
+php artisan key:generate
+```
 
-Mở file `.env` và chỉnh sửa các thông tin sau:
+### 5. Tạo Database và cấu hình kết nối
+Mở phần mềm quản lý Database (phpMyAdmin, MySQL Workbench) và tạo một database mới có tên:
+```sql
+CREATE DATABASE PetCare CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
 
+Cập nhật thông tin kết nối database trong file `.env` của bạn:
 ```env
-APP_NAME=PetCare
-APP_ENV=local
-APP_URL=http://<IP_CUA_BAN>:8000
-
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -68,218 +72,94 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-> 💡 **Thay `<IP_CUA_BAN>`** bằng địa chỉ IPv4 của máy bạn (xem bằng `ipconfig` trên Windows hoặc `ifconfig` trên Mac).  
-> Ví dụ: `APP_URL=http://192.168.88.105:8000`
-
-### Bước 5: Tạo Application Key
-
+### 6. Khởi tạo bảng dữ liệu và nạp dữ liệu mẫu (Seed)
+Chạy lệnh migrations để tự động tạo cấu trúc bảng và seeder dữ liệu mẫu cho hệ thống:
 ```bash
-php artisan key:generate
+php artisan migrate --seed
 ```
 
-### Bước 6: Tạo database
-
-Mở **phpMyAdmin** (XAMPP) hoặc MySQL Workbench, tạo database tên:
-
-```
-PetCare
-```
-
-### Bước 7: Chạy Migration & Seeder
-
-```bash
-# Tạo bảng
-php artisan migrate
-
-# Nhập dữ liệu mẫu
-php artisan db:seed
-```
-
-> ⚠️ Nếu muốn reset toàn bộ dữ liệu:
-> ```bash
-> php artisan migrate:fresh --seed
-> ```
-
-### Bước 8: Tạo link storage (ảnh đại diện)
-
+### 7. Tạo liên kết thư mục chứa ảnh (Storage Link)
 ```bash
 php artisan storage:link
 ```
 
-### Bước 9: Chạy Backend Server
-
+### 8. Khởi chạy Server API Backend
+Chạy server Laravel API tại cổng mặc định `8000`:
 ```bash
-# Chạy trên localhost (chỉ dùng nội bộ máy)
 php artisan serve
-
-# Chạy trên IP để máy khác kết nối được (cùng WiFi)
-php artisan serve --host=<IP_CUA_BAN> --port=8000
 ```
-
-> Ví dụ: `php artisan serve --host=192.168.88.105 --port=8000`
-
-✅ Backend đang chạy tại: `http://<IP_CUA_BAN>:8000`
+👉 Server Backend sẽ chạy tại địa chỉ: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
 ---
 
-## 🌐 PHẦN 2 — FRONTEND (Vue 3 + Vite)
+## 🌐 PHẦN 2: HƯỚNG DẪN CÀI ĐẶT FRONTEND (Vue 3 + Vite)
 
-### Bước 1: Vào thư mục Frontend
-
+### 1. Di chuyển vào thư mục Frontend
 ```bash
 cd PetCare
 ```
 
-### Bước 2: Cài đặt dependencies
-
+### 2. Cài đặt các gói thư viện Node.js
 ```bash
 npm install
 ```
 
-### Bước 3: Cấu hình IP Backend
+### 3. Cấu hình IP API kết nối tới Backend
+Mở và kiểm tra IP API trong các file cấu hình sau để đảm bảo kết nối tới localhost:
+* **Admin API**: `src/core/baseRequestAdmin.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
+* **Bác sĩ API**: `src/core/baseRequestBacsi.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
+* **Lễ tân API**: `src/core/baseRequestLeTan.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
 
-Mở **6 file** sau và thay `<IP_BACKEND>:8000` bằng IP máy chạy Backend:
-
-| File | Đường dẫn |
-|------|-----------|
-| `baseRequestAdmin.js` | `src/core/baseRequestAdmin.js` |
-| `baseRequestBacsi.js` | `src/core/baseRequestBacsi.js` |
-| `baseRequestLeTan.js` | `src/core/baseRequestLeTan.js` |
-| `checkAdmin.js` | `src/router/checkAdmin.js` |
-| `checkBacSi.js` | `src/router/checkBacSi.js` |
-| `checkLeTan.js` | `src/router/checkLeTan.js` |
-
-**Ví dụ trong `baseRequestAdmin.js`:**
-
-```js
-// Trước
-const apiUrl = "http://10.220.9.53:8000/api/";
-
-// Sau (thay bằng IP của máy chạy BE)
-const apiUrl = "http://192.168.88.105:8000/api/";
-```
-
-> 💡 **Nếu BE chạy cùng máy với FE** → dùng `http://localhost:8000/api/` hoặc `http://127.0.0.1:8000/api/`
-
-### Bước 4: Chạy Frontend
-
+### 4. Khởi chạy Server Frontend
+Khởi chạy môi trường phát triển local (Vite dev server):
 ```bash
 npm run dev
 ```
-
-✅ Frontend đang chạy tại: **http://localhost:5173**
-
----
-
-## 🔗 PHẦN 3 — KẾT NỐI HAI MÁY KHÁC NHAU
-
-Nếu **FE và BE chạy trên 2 máy khác nhau**, cần đảm bảo:
-
-| Điều kiện | Mô tả |
-|-----------|-------|
-| ✅ Cùng WiFi | Cả 2 máy kết nối cùng 1 mạng |
-| ✅ IP đúng | IP trong FE phải là IP máy chạy BE |
-| ✅ BE đang chạy | `php artisan serve --host=<IP> --port=8000` |
-| ✅ Firewall tắt | Tắt tường lửa trên máy BE (Windows Defender) |
-
-### Cách lấy IP trên từng hệ điều hành
-
-**Windows:**
-```
-ipconfig
-→ Tìm dòng: IPv4 Address . . . . . : 192.168.x.x
-```
-
-**macOS / Linux:**
-```
-ifconfig | grep "inet "
-→ Tìm dòng không phải 127.0.0.1
-```
+👉 Truy cập giao diện ứng dụng tại địa chỉ: **[http://localhost:5173](http://localhost:5173)**
 
 ---
 
-## 🌍 PHẦN 4 — DÙNG NGROK (Không cùng WiFi)
+## 🔑 THÔNG TIN TÀI KHOẢN ĐĂNG NHẬP MẪU
 
-Nếu hai máy **không cùng mạng**, dùng ngrok để tạo URL public:
+Sau khi chạy lệnh `php artisan db:seed`, hệ thống sẽ tự động nạp các tài khoản thử nghiệm sau:
 
-### Trên máy chạy Backend:
+| Vai trò | Đường dẫn đăng nhập | Email mẫu | Mật khẩu mặc định |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `http://localhost:5173/admin/login` | `admin@gmail.com` | `123456` |
+| **Lễ tân** | `http://localhost:5173/login` | `letan@gmail.com` | `123456` |
+| **Bác sĩ** | `http://localhost:5173/bac-si/login` | `bacsi@gmail.com` | `123456` |
 
+---
+
+## 👥 Nhóm Công Nghệ Sử Dụng
+
+* **Frontend**:
+  * Vue 3 (Composition API / Options API)
+  * Vite (Công cụ build siêu tốc)
+  * TypeScript / JavaScript
+  * Vue Router (Quản lý định tuyến)
+  * Axios (Gửi HTTP Requests)
+  * Chart.js & Vue-ChartJS (Vẽ biểu đồ thống kê)
+* **Backend**:
+  * Laravel framework
+  * MySQL (Hệ quản trị cơ sở dữ liệu)
+  * Laravel Sanctum (Xác thực API bằng Token)
+
+---
+
+## 🛠️ Khắc Phục Lỗi Thường Gặp (Troubleshooting)
+
+### 1. Lỗi CORS khi gọi API
+Nếu trình duyệt báo lỗi CORS, mở file `config/cors.php` trong Laravel Backend và cấu hình cho phép nguồn nhận từ Frontend:
+```php
+'allowed_origins' => ['http://localhost:5173'],
+```
+
+### 2. Thiếu quyền thực thi lệnh npm (macOS)
+Nếu gặp lỗi `Permission denied` khi chạy `npm run dev`, thực hiện cấp quyền thực thi cho các file binary trong thư mục node_modules:
 ```bash
-# Cài ngrok (nếu chưa có): https://ngrok.com/download
-ngrok http 8000
-```
-
-→ Ngrok tạo ra URL dạng: `https://abc123.ngrok-free.app`
-
-### Trên máy Frontend:
-
-Thay IP trong 6 file cấu hình bằng URL ngrok:
-
-```js
-const apiUrl = "https://abc123.ngrok-free.app/api/";
+chmod +x node_modules/.bin/*
 ```
 
 ---
-
-## 📱 Tài khoản mặc định (sau khi seed)
-
-> *(Kiểm tra file `database/seeders/` trong BE để xem tài khoản mặc định)*
-
-| Vai trò | Email | Mật khẩu |
-|---------|-------|-----------|
-| Admin | admin@petcare.com | 123456 |
-| Bác sĩ | bacsi@petcare.com | 123456 |
-| Lễ tân | letan@petcare.com | 123456 |
-
----
-
-## 🛠️ Các lệnh thường dùng
-
-```bash
-# ===== BACKEND =====
-composer install          # Cài dependencies
-php artisan key:generate  # Tạo app key
-php artisan migrate       # Chạy migration
-php artisan db:seed       # Nhập dữ liệu mẫu
-php artisan migrate:fresh --seed  # Reset toàn bộ DB
-php artisan storage:link  # Tạo link ảnh
-php artisan serve --host=<IP> --port=8000  # Chạy server
-
-# ===== FRONTEND =====
-npm install               # Cài dependencies
-npm run dev               # Chạy dev server
-npm run build             # Build production
-```
-
----
-
-## ❗ Lỗi thường gặp
-
-| Lỗi | Nguyên nhân | Cách sửa |
-|-----|-------------|----------|
-| `CORS error` | BE chưa cấu hình CORS | Kiểm tra `config/cors.php` trong Laravel |
-| `Connection refused` | BE chưa chạy hoặc sai IP | Kiểm tra lại `php artisan serve` |
-| `401 Unauthorized` | Token hết hạn | Đăng xuất và đăng nhập lại |
-| `404 Not Found` | Sai đường dẫn API | Kiểm tra route trong BE |
-| `npm error: Permission denied` | Thiếu quyền thực thi | Chạy `chmod +x node_modules/.bin/*` |
-| `Cannot find native binding` | node_modules lỗi | Xóa và chạy lại `npm install` |
-
----
-
-## 👥 Công nghệ sử dụng
-
-**Frontend:**
-- Vue 3 + Vite + TypeScript
-- Vue Router 4
-- Axios
-- Chart.js + Vue-ChartJS
-- Vue Easy Lightbox
-
-**Backend:**
-- Laravel (PHP)
-- MySQL
-- Laravel Sanctum (Authentication)
-
----
-
-*📅 Cập nhật: 16/07/2026*
+*📅 Tài liệu được cập nhật ngày: 16/07/2026 bởi Antigravity*
