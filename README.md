@@ -10,27 +10,46 @@ Dự án PetCare là hệ thống quản lý phòng khám thú y được xây d
 
 ---
 
-## 📌 SƠ ĐỒ QUY TRÌNH HỆ THỐNG (Workflows)
+## 📌 SƠ ĐỒ QUY TRÌNH HOẠT ĐỘNG HỆ THỐNG (SDLC / ETVX Workflow)
 
-Dưới đây là sơ đồ quy trình đặt khám và xử lý ca bệnh của hệ thống PetCare:
+Dưới đây là sơ đồ quy trình hoạt động nghiệp vụ tích hợp (ETVX: Entry - Task - Verification - Exit) của hệ thống PetCare:
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    actor Khach as Khách hàng / Lễ tân
-    actor Admin as Quản trị viên (Admin)
-    actor Bacsi as Bác sĩ thú y
-    
-    Khach->>Frontend: Truy cập trang đặt lịch & chọn bác sĩ/giờ khám
-    Frontend->>Backend: Gửi yêu cầu đặt lịch (POST /api/phieu-dat-lich)
-    Backend-->>Frontend: Trả về trạng thái chờ xác nhận
-    Admin->>Frontend: Quản lý & duyệt lịch hẹn
-    Frontend->>Backend: Xác nhận lịch hẹn (PUT /api/admin/lich-hen/duyet)
-    Backend-->>Khach: Thông báo đặt lịch thành công
-    Bacsi->>Frontend: Xem danh sách ca khám (GET /api/bac-si/lich-hen)
-    Bacsi->>Khach: Tiến hành khám & cập nhật hồ sơ bệnh án
-    Bacsi->>Frontend: Lưu kết quả & đơn thuốc (POST /api/bac-si/quan-ly-pet-care)
-    Frontend->>Backend: Cập nhật thông tin bệnh án vào DB
+flowchart TD
+    %% Định nghĩa phong cách
+    classDef process fill:#d4ebf2,stroke:#33aaee,stroke-width:2px;
+    classDef actor fill:#f9f9f9,stroke:#333,stroke-dasharray: 5 5;
+    classDef start_end fill:#ffeebb,stroke:#ffaa66,stroke-width:2px;
+
+    subgraph Entry [1. Đăng Ký & Đặt Khám]
+        A([Bắt đầu]) --> B[Khách hàng Đăng nhập/Đăng ký tài khoản]
+        B --> C[Lễ tân/Khách đặt lịch hẹn khám]
+        C --> D[Chọn chuyên khoa, Bác sĩ & Khung giờ]
+    end
+
+    subgraph Task [2. Xác Nhận & Điều Phối]
+        D --> E[Lịch hẹn ở trạng thái: Chờ xác nhận]
+        E --> F[Admin/Lễ tân kiểm tra thông tin lịch hẹn]
+        F --> G{Xác nhận lịch?}
+        G -- Không duyệt --> H[Hủy lịch & Thông báo khách hàng]
+        G -- Phê duyệt --> I[Xếp lịch hẹn vào hàng chờ khám của Bác sĩ]
+    end
+
+    subgraph Verification [3. Khám Lâm Sàng & Điều Trị]
+        I --> J[Bác sĩ kiểm tra danh sách ca bệnh chờ]
+        J --> K[Tiến hành khám lâm sàng cho thú cưng]
+        K --> L[Kê đơn thuốc & Cập nhật Hồ sơ bệnh án]
+    end
+
+    subgraph Exit [4. Thanh Toán & Hoàn Tất]
+        L --> M[Lễ tân xác nhận ca khám hoàn tất]
+        M --> N[Khách hàng tiến hành thanh toán hóa đơn]
+        N --> O([Kết thúc ca khám])
+    end
+
+    %% Áp dụng Class
+    class A,O start_end;
+    class B,C,D,E,F,H,I,J,K,L,M,N process;
 ```
 
 ---
@@ -163,7 +182,7 @@ npm run dev
 
 ---
 
-## 🔑 THÔNG TIN TÀI KHOẢN ĐĂNG NHẬP MẪU
+## 🔑 THÔNG TIN TÀI KHẢN ĐĂNG NHẬP MẪU
 
 Sau khi chạy lệnh `php artisan db:seed`, hệ thống sẽ tự động nạp các tài khoản thử nghiệm sau:
 
