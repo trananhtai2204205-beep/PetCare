@@ -1,25 +1,28 @@
 # 🐾 Hệ Thống Quản Lý Phòng Khám Thú Y — PetCare
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=bugs)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=coverage)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
+<div align="center">
+  <img src="src/assets/images/logo_letan.png" alt="PetCare Logo" width="200" style="border-radius: 10px; margin-bottom: 20px;" />
+  <p><em>Hệ thống quản lý thông minh, toàn diện dành cho phòng khám thú y hiện đại</em></p>
 
-Dự án PetCare là hệ thống quản lý phòng khám thú y được xây dựng với kiến trúc tách biệt hoàn toàn giữa **Frontend (Vue 3)** và **Backend (Laravel API)**.
+  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
+  [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=bugs)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
+  [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
+  [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=coverage)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
+  [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=trananhtai2204205-beep_PetCare&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=trananhtai2204205-beep_PetCare)
+</div>
 
 ---
 
-## 📌 1. SƠ ĐỒ QUY TRÌNH HOẠT ĐỘNG HỆ THỐNG (ETVX / SDLC Workflow)
+## 📌 1. Sơ Đồ Quy Trình Nghiệp Vụ Tích Hợp (ETVX / SDLC Workflow)
 
 Dưới đây là sơ đồ quy trình hoạt động nghiệp vụ tích hợp (ETVX: Entry - Task - Verification - Exit) của hệ thống PetCare:
 
 ```mermaid
 flowchart TD
     %% Định nghĩa phong cách
-    classDef process fill:#d4ebf2,stroke:#33aaee,stroke-width:2px;
-    classDef actor fill:#f9f9f9,stroke:#333,stroke-dasharray: 5 5;
-    classDef start_end fill:#ffeebb,stroke:#ffaa66,stroke-width:2px;
+    classDef process fill:#e3faffc,stroke:#15aabf,stroke-width:2px;
+    classDef actor fill:#f8f9fa,stroke:#495057,stroke-dasharray: 5 5;
+    classDef start_end fill:#fff3bf,stroke:#fab005,stroke-width:2px;
 
     subgraph Entry [1. Đăng Ký & Đặt Khám - Entry]
         A([Bắt đầu]) --> B[Khách hàng Đăng nhập/Đăng ký tài khoản]
@@ -54,235 +57,168 @@ flowchart TD
 
 ---
 
-## 📖 2. TÀI LIỆU API CHI TIẾT (Detailed API Reference)
+## 📖 2. Tài Liệu API Chi Tiết (Detailed API Reference)
 
-Hệ thống API Backend sử dụng xác thực qua **Laravel Sanctum**. Mọi request gửi đi yêu cầu đính kèm Header: `Authorization: Bearer <TOKEN>`.
+> [!NOTE]  
+> Hệ thống API Backend sử dụng xác thực qua **Laravel Sanctum**. Mọi request gửi đi yêu cầu đính kèm Header: `Authorization: Bearer <TOKEN>`.
 
-### 2.1 Phân hệ Lễ tân (Khách hàng)
+### ➡️ Phân hệ Lễ tân (Khách hàng)
 
-#### 🔐 Đăng nhập
-* **URL**: `/api/le-tan/login`
-* **Method**: `POST`
-* **Request Body**:
-```json
-{
-  "email": "letan@gmail.com",
-  "password": "password123"
-}
-```
-* **Response (Success - 200)**:
-```json
-{
-  "status": true,
-  "message": "Đăng nhập thành công!",
-  "token": "1|abcdef123456...",
-  "ho_ten": "Lễ Tân A"
-}
-```
-
-#### 📅 Đặt lịch khám
-* **URL**: `/api/le-tan/dat-lich`
-* **Method**: `POST`
-* **Request Body**:
-```json
-{
-  "id_bac_si": 3,
-  "id_chuyen_khoa": 1,
-  "ngay_dat": "2026-07-20",
-  "khung_gio": "09:00 - 10:00",
-  "ten_thu_cung": "Miu Miu",
-  "trieu_chung": "Mệt mỏi, bỏ ăn"
-}
-```
-
----
-
-### 2.2 Phân hệ Bác sĩ
-
-#### 📋 Xem danh sách lịch hẹn được phân công
-* **URL**: `/api/bac-si/lich-hen`
-* **Method**: `GET`
-* **Response (Success - 200)**:
-```json
-{
-  "status": true,
-  "data": [
+* **Đăng nhập hệ thống**
+  * `POST` `/api/le-tan/login`
+  * **Request Body (JSON)**:
+    ```json
     {
-      "id": 1,
-      "ten_thu_cung": "Miu Miu",
+      "email": "letan@gmail.com",
+      "password": "password123"
+    }
+    ```
+  * **Response (Success - 200)**:
+    ```json
+    {
+      "status": true,
+      "message": "Đăng nhập thành công!",
+      "token": "1|abcdef123456...",
+      "ho_ten": "Lễ Tân A"
+    }
+    ```
+
+* **Đặt lịch khám thú cưng**
+  * `POST` `/api/le-tan/dat-lich`
+  * **Request Body (JSON)**:
+    ```json
+    {
+      "id_bac_si": 3,
+      "id_chuyen_khoa": 1,
       "ngay_dat": "2026-07-20",
       "khung_gio": "09:00 - 10:00",
-      "trieu_chung": "Mệt mỏi, bỏ ăn",
-      "trang_thai": "Đã duyệt"
+      "ten_thu_cung": "Miu Miu",
+      "trieu_chung": "Mệt mỏi, bỏ ăn"
     }
-  ]
-}
-```
+    ```
 
-#### 💾 Cập nhật hồ sơ bệnh án
-* **URL**: `/api/bac-si/quan-ly-pet-care/store`
-* **Method**: `POST`
-* **Request Body**:
-```json
-{
-  "id_lich_hen": 1,
-  "chuan_doan": "Cảm cúm thông thường ở mèo",
-  "don_thuoc": "Paracetamol 500mg, Vitamin C",
-  "ghi_chu": "Cho uống nước ấm, tái khám sau 3 ngày"
-}
-```
+### ➡️ Phân hệ Bác sĩ
 
----
+* **Xem danh sách lịch hẹn được phân công**
+  * `GET` `/api/bac-si/lich-hen`
+  * **Response (Success - 200)**:
+    ```json
+    {
+      "status": true,
+      "data": [
+        {
+          "id": 1,
+          "ten_thu_cung": "Miu Miu",
+          "ngay_dat": "2026-07-20",
+          "khung_gio": "09:00 - 10:00",
+          "trieu_chung": "Mệt mỏi, bỏ ăn",
+          "trang_thai": "Đã duyệt"
+        }
+      ]
+    }
+    ```
 
-### 2.3 Phân hệ Admin
-
-#### ⚙️ Duyệt lịch hẹn khám
-* **URL**: `/api/admin/lich-hen/accept`
-* **Method**: `POST`
-* **Request Body**:
-```json
-{
-  "id_lich_hen": 1
-}
-```
-
-#### 📊 Xem thống kê Dashboard
-* **URL**: `/api/admin/dashboard`
-* **Method**: `GET`
+* **Cập nhật hồ sơ bệnh án & kê đơn**
+  * `POST` `/api/bac-si/quan-ly-pet-care/store`
+  * **Request Body (JSON)**:
+    ```json
+    {
+      "id_lich_hen": 1,
+      "chuan_doan": "Cảm cúm thông thường ở mèo",
+      "don_thuoc": "Paracetamol 500mg, Vitamin C",
+      "ghi_chu": "Cho uống nước ấm, tái khám sau 3 ngày"
+    }
+    ```
 
 ---
 
 ## 🗂️ 3. Cấu Trúc Thư Mục Dự Án
 
-```
-📂 PetCare/                              ← Mã nguồn Frontend (Vue 3 + Vite)
-📂 Be-PetCare--feature-develop/          ← Mã nguồn Backend (Laravel 12 + MySQL)
-```
+| Thư mục | Vai trò | Công nghệ chính |
+| :--- | :--- | :--- |
+| `📂 PetCare/` | Frontend Client & Admin | Vue 3, Vite, Axios, Bootstrap |
+| `📂 Be-PetCare--feature-develop/` | Backend RESTful API | Laravel 12, MySQL, Sanctum |
 
 ---
 
-## ⚙️ 4. Yêu Cầu Cài Đặt Hệ Thống
+## 🖥️ 4. Hướng Dẫn Cài Đặt Nhanh (Quick Start)
 
-Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đặt các công cụ sau:
-* **Node.js**: Phiên bản `18.x` hoặc `>= 22.x`
-* **PHP**: Phiên bản `>= 8.2` (Khuyên dùng PHP 8.4)
-* **Composer**: Phiên bản `>= 2.x`
-* **MySQL**: Phiên bản `>= 8.x`
+### 4.1 Cấu hình Backend (Laravel)
 
----
-
-## 🖥️ 5. HƯỚNG DẪN CÀI ĐẶT BACKEND (Laravel)
-
-Di chuyển vào thư mục backend và thực hiện các bước cấu hình:
-
-### 5.1 Di chuyển vào thư mục Backend
 ```bash
+# 1. Di chuyển vào thư mục Backend
 cd Be-PetCare--feature-develop
-```
 
-### 5.2 Cài đặt các thư viện PHP
-```bash
+# 2. Cài đặt các thư viện PHP
 composer install
-```
 
-### 5.3 Tạo file cấu hình môi trường `.env`
-```bash
+# 3. Tạo file cấu hình môi trường
 cp .env.example .env
-```
 
-### 5.4 Tạo mã khóa ứng dụng (Application Key)
-```bash
+# 4. Tạo mã khóa ứng dụng
 php artisan key:generate
 ```
 
-### 5.5 Tạo Database và cấu hình kết nối
-Tạo database mới trong MySQL:
-```sql
-CREATE DATABASE PetCare CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
+> [!IMPORTANT]  
+> Tạo cơ sở dữ liệu mới trong MySQL với tên `PetCare`. Sau đó cập nhật cấu hình kết nối trong file `.env`:
+> ```env
+> DB_DATABASE=PetCare
+> DB_USERNAME=root
+> DB_PASSWORD=
+> ```
 
-Cập nhật thông tin kết nối database trong file `.env`:
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=PetCare
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-### 5.6 Khởi tạo bảng dữ liệu và nạp dữ liệu mẫu (Seed)
 ```bash
+# 5. Khởi tạo bảng dữ liệu và nạp dữ liệu mẫu
 php artisan migrate --seed
-```
 
-### 5.7 Tạo liên kết thư mục chứa ảnh (Storage Link)
-```bash
+# 6. Tạo liên kết thư mục storage
 php artisan storage:link
-```
 
-### 5.8 Khởi chạy Server API Backend
-```bash
+# 7. Khởi chạy Server Backend
 php artisan serve
 ```
-👉 Server Backend sẽ chạy tại địa chỉ: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+👉 Server API chạy tại: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
----
+### 4.2 Cấu hình Frontend (Vue 3)
 
-## 🌐 6. HƯỚNG DẪN CÀI ĐẶT FRONTEND (Vue 3 + Vite)
-
-### 6.1 Di chuyển vào thư mục Frontend
 ```bash
+# 1. Di chuyển vào thư mục Frontend
 cd PetCare
-```
 
-### 6.2 Cài đặt các gói thư viện Node.js
-```bash
+# 2. Cài đặt các thư viện Node.js
 npm install
-```
 
-### 6.3 Cấu hình IP API kết nối tới Backend
-Mở các file sau và trỏ API về địa chỉ local của Backend:
-* **Admin API**: `src/core/baseRequestAdmin.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
-* **Bác sĩ API**: `src/core/baseRequestBacsi.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
-* **Lễ tân API**: `src/core/baseRequestLeTan.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
-
-### 6.4 Khởi chạy Server Frontend
-```bash
+# 3. Khởi chạy môi trường Local
 npm run dev
 ```
-👉 Truy cập giao diện ứng dụng tại địa chỉ: **[http://localhost:5173](http://localhost:5173)**
+👉 Giao diện ứng dụng chạy tại: **[http://localhost:5173](http://localhost:5173)**
 
 ---
 
-## 🔑 7. THÔNG TIN TÀI KHẢN ĐĂNG NHẬP MẪU
+## 🔑 5. Tài Khoản Đăng Nhập Thử Nghiệm
 
-Sau khi chạy lệnh `php artisan db:seed`, hệ thống sẽ tự động nạp các tài khoản thử nghiệm sau:
+Dưới đây là danh sách tài khoản được tạo tự động sau khi chạy lệnh nạp dữ liệu (seed):
 
 | Vai trò | Đường dẫn đăng nhập | Email mẫu | Mật khẩu mặc định |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `http://localhost:5173/admin/login` | `admin@gmail.com` | `123456` |
-| **Lễ tân** | `http://localhost:5173/login` | `letan@gmail.com` | `123456` |
-| **Bác sĩ** | `http://localhost:5173/bac-si/login` | `bacsi@gmail.com` | `123456` |
+| **🧑‍💼 Quản trị viên (Admin)** | `/admin/login` | `admin@gmail.com` | `123456` |
+| **🧑‍💻 Nhân viên Lễ tân** | `/login` | `letan@gmail.com` | `123456` |
+| **👨‍⚕️ Bác sĩ thú y** | `/bac-si/login` | `bacsi@gmail.com` | `123456` |
 
 ---
 
-## 🛠️ 8. KHẮC PHỤC LỖI THƯỜNG GẶP (Troubleshooting)
+## 🛠️ 6. Khắc Phục Lỗi Thường Gặp (Troubleshooting)
 
-### 8.1 Lỗi CORS (Cross-Origin Resource Sharing)
-Mở file `config/cors.php` trong Laravel Backend và cấu hình cho phép Frontend nhận dữ liệu:
-```php
-'allowed_origins' => ['http://localhost:5173'],
-```
+> [!TIP]  
+> **Lỗi CORS (Cross-Origin Resource Sharing)**  
+> Mở file `config/cors.php` trong Laravel Backend và cập nhật để cho phép kết nối từ Frontend:
+> ```php
+> 'allowed_origins' => ['http://localhost:5173'],
+> ```
 
-### 8.2 Lỗi Xác Thực 401 Unauthorized khi gọi API
-* **Nguyên nhân**: Token đã hết hạn hoặc chưa lưu vào LocalStorage.
-* **Xử lý**: Đăng xuất, xóa cache trình duyệt, và tiến hành đăng nhập lại để làm mới token.
-
-### 8.3 Thiếu quyền thực thi lệnh npm (macOS)
-```bash
-chmod +x node_modules/.bin/*
-```
+> [!WARNING]  
+> **Lỗi Xác Thực 401 Unauthorized**  
+> Nếu gặp lỗi 401 khi gọi API sau một khoảng thời gian không thao tác, hãy đăng xuất tài khoản và đăng nhập lại để làm mới mã Token trong LocalStorage.
 
 ---
-*📅 Tài liệu được cập nhật ngày: 16/07/2026 bởi Antigravity*
+*📅 Tài liệu được cập nhật và tối ưu thẩm mỹ ngày: 16/07/2026 bởi Antigravity*
