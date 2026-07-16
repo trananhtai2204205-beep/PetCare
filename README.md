@@ -10,7 +10,7 @@ Dự án PetCare là hệ thống quản lý phòng khám thú y được xây d
 
 ---
 
-## 📌 SƠ ĐỒ QUY TRÌNH HOẠT ĐỘNG HỆ THỐNG (SDLC / ETVX Workflow)
+## 📌 1. SƠ ĐỒ QUY TRÌNH HOẠT ĐỘNG HỆ THỐNG (ETVX / SDLC Workflow)
 
 Dưới đây là sơ đồ quy trình hoạt động nghiệp vụ tích hợp (ETVX: Entry - Task - Verification - Exit) của hệ thống PetCare:
 
@@ -21,13 +21,13 @@ flowchart TD
     classDef actor fill:#f9f9f9,stroke:#333,stroke-dasharray: 5 5;
     classDef start_end fill:#ffeebb,stroke:#ffaa66,stroke-width:2px;
 
-    subgraph Entry [1. Đăng Ký & Đặt Khám]
+    subgraph Entry [1. Đăng Ký & Đặt Khám - Entry]
         A([Bắt đầu]) --> B[Khách hàng Đăng nhập/Đăng ký tài khoản]
         B --> C[Lễ tân/Khách đặt lịch hẹn khám]
         C --> D[Chọn chuyên khoa, Bác sĩ & Khung giờ]
     end
 
-    subgraph Task [2. Xác Nhận & Điều Phối]
+    subgraph Task [2. Xác Nhận & Điều Phối - Task]
         D --> E[Lịch hẹn ở trạng thái: Chờ xác nhận]
         E --> F[Admin/Lễ tân kiểm tra thông tin lịch hẹn]
         F --> G{Xác nhận lịch?}
@@ -35,13 +35,13 @@ flowchart TD
         G -- Phê duyệt --> I[Xếp lịch hẹn vào hàng chờ khám của Bác sĩ]
     end
 
-    subgraph Verification [3. Khám Lâm Sàng & Điều Trị]
+    subgraph Verification [3. Khám Lâm Sàng & Điều Trị - Verification]
         I --> J[Bác sĩ kiểm tra danh sách ca bệnh chờ]
         J --> K[Tiến hành khám lâm sàng cho thú cưng]
         K --> L[Kê đơn thuốc & Cập nhật Hồ sơ bệnh án]
     end
 
-    subgraph Exit [4. Thanh Toán & Hoàn Tất]
+    subgraph Exit [4. Thanh Toán & Hoàn Tất - Exit]
         L --> M[Lễ tân xác nhận ca khám hoàn tất]
         M --> N[Khách hàng tiến hành thanh toán hóa đơn]
         N --> O([Kết thúc ca khám])
@@ -54,32 +54,105 @@ flowchart TD
 
 ---
 
-## 📖 TÀI LIỆU API (API Documentation)
+## 📖 2. TÀI LIỆU API CHI TIẾT (Detailed API Reference)
 
 Hệ thống API Backend sử dụng xác thực qua **Laravel Sanctum**. Mọi request gửi đi yêu cầu đính kèm Header: `Authorization: Bearer <TOKEN>`.
 
-### 1. Phân hệ Lễ tân (Khách hàng)
-* **Đăng nhập**: `POST /api/le-tan/login`
-  * Body: `{ "email": "...", "password": "..." }`
-* **Đăng ký tài khoản**: `POST /api/le-tan/register`
-* **Đặt lịch khám**: `POST /api/le-tan/dat-lich`
-* **Xem danh sách bác sĩ**: `GET /api/le-tan/danh-sach-bac-si`
+### 2.1 Phân hệ Lễ tân (Khách hàng)
 
-### 2. Phân hệ Bác sĩ
-* **Xem lịch hẹn phân công**: `GET /api/bac-si/lich-hen`
-* **Xem lịch làm việc cá nhân**: `GET /api/bac-si/lich-ca-nhan`
-* **Cập nhật hồ sơ bệnh án**: `POST /api/bac-si/quan-ly-pet-care/store`
-  * Body: `{ "id_lich_hen": 1, "chuan_doan": "...", "don_thuoc": "..." }`
+#### 🔐 Đăng nhập
+* **URL**: `/api/le-tan/login`
+* **Method**: `POST`
+* **Request Body**:
+```json
+{
+  "email": "letan@gmail.com",
+  "password": "password123"
+}
+```
+* **Response (Success - 200)**:
+```json
+{
+  "status": true,
+  "message": "Đăng nhập thành công!",
+  "token": "1|abcdef123456...",
+  "ho_ten": "Lễ Tân A"
+}
+```
 
-### 3. Phân hệ Admin
-* **Xem Dashboard thống kê**: `GET /api/admin/dashboard`
-* **Duyệt lịch hẹn**: `POST /api/admin/lich-hen/accept`
-* **Quản lý danh sách bác sĩ**: `GET /api/admin/bac-si` | `POST /api/admin/bac-si/store`
-* **Quản lý chuyên khoa**: `GET /api/admin/chuyen-khoa`
+#### 📅 Đặt lịch khám
+* **URL**: `/api/le-tan/dat-lich`
+* **Method**: `POST`
+* **Request Body**:
+```json
+{
+  "id_bac_si": 3,
+  "id_chuyen_khoa": 1,
+  "ngay_dat": "2026-07-20",
+  "khung_gio": "09:00 - 10:00",
+  "ten_thu_cung": "Miu Miu",
+  "trieu_chung": "Mệt mỏi, bỏ ăn"
+}
+```
 
 ---
 
-## 🗂️ Cấu Trúc Thư Mục Dự Án
+### 2.2 Phân hệ Bác sĩ
+
+#### 📋 Xem danh sách lịch hẹn được phân công
+* **URL**: `/api/bac-si/lich-hen`
+* **Method**: `GET`
+* **Response (Success - 200)**:
+```json
+{
+  "status": true,
+  "data": [
+    {
+      "id": 1,
+      "ten_thu_cung": "Miu Miu",
+      "ngay_dat": "2026-07-20",
+      "khung_gio": "09:00 - 10:00",
+      "trieu_chung": "Mệt mỏi, bỏ ăn",
+      "trang_thai": "Đã duyệt"
+    }
+  ]
+}
+```
+
+#### 💾 Cập nhật hồ sơ bệnh án
+* **URL**: `/api/bac-si/quan-ly-pet-care/store`
+* **Method**: `POST`
+* **Request Body**:
+```json
+{
+  "id_lich_hen": 1,
+  "chuan_doan": "Cảm cúm thông thường ở mèo",
+  "don_thuoc": "Paracetamol 500mg, Vitamin C",
+  "ghi_chu": "Cho uống nước ấm, tái khám sau 3 ngày"
+}
+```
+
+---
+
+### 2.3 Phân hệ Admin
+
+#### ⚙️ Duyệt lịch hẹn khám
+* **URL**: `/api/admin/lich-hen/accept`
+* **Method**: `POST`
+* **Request Body**:
+```json
+{
+  "id_lich_hen": 1
+}
+```
+
+#### 📊 Xem thống kê Dashboard
+* **URL**: `/api/admin/dashboard`
+* **Method**: `GET`
+
+---
+
+## 🗂️ 3. Cấu Trúc Thư Mục Dự Án
 
 ```
 📂 PetCare/                              ← Mã nguồn Frontend (Vue 3 + Vite)
@@ -88,7 +161,7 @@ Hệ thống API Backend sử dụng xác thực qua **Laravel Sanctum**. Mọi 
 
 ---
 
-## ⚙️ Yêu Cầu Cài Đặt Hệ Thống
+## ⚙️ 4. Yêu Cầu Cài Đặt Hệ Thống
 
 Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đặt các công cụ sau:
 * **Node.js**: Phiên bản `18.x` hoặc `>= 22.x`
@@ -98,32 +171,32 @@ Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đ
 
 ---
 
-## 🖥️ HƯỚNG DẪN CÀI ĐẶT BACKEND (Laravel)
+## 🖥️ 5. HƯỚNG DẪN CÀI ĐẶT BACKEND (Laravel)
 
 Di chuyển vào thư mục backend và thực hiện các bước cấu hình:
 
-### 1. Di chuyển vào thư mục Backend
+### 5.1 Di chuyển vào thư mục Backend
 ```bash
 cd Be-PetCare--feature-develop
 ```
 
-### 2. Cài đặt các thư viện PHP
+### 5.2 Cài đặt các thư viện PHP
 ```bash
 composer install
 ```
 
-### 3. Tạo file cấu hình môi trường `.env`
+### 5.3 Tạo file cấu hình môi trường `.env`
 ```bash
 cp .env.example .env
 ```
 
-### 4. Tạo mã khóa ứng dụng (Application Key)
+### 5.4 Tạo mã khóa ứng dụng (Application Key)
 ```bash
 php artisan key:generate
 ```
 
-### 5. Tạo Database và cấu hình kết nối
-Tạo database mới có tên:
+### 5.5 Tạo Database và cấu hình kết nối
+Tạo database mới trong MySQL:
 ```sql
 CREATE DATABASE PetCare CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
@@ -138,17 +211,17 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### 6. Khởi tạo bảng dữ liệu và nạp dữ liệu mẫu (Seed)
+### 5.6 Khởi tạo bảng dữ liệu và nạp dữ liệu mẫu (Seed)
 ```bash
 php artisan migrate --seed
 ```
 
-### 7. Tạo liên kết thư mục chứa ảnh (Storage Link)
+### 5.7 Tạo liên kết thư mục chứa ảnh (Storage Link)
 ```bash
 php artisan storage:link
 ```
 
-### 8. Khởi chạy Server API Backend
+### 5.8 Khởi chạy Server API Backend
 ```bash
 php artisan serve
 ```
@@ -156,25 +229,25 @@ php artisan serve
 
 ---
 
-## 🌐 HƯỚNG DẪN CÀI ĐẶT FRONTEND (Vue 3 + Vite)
+## 🌐 6. HƯỚNG DẪN CÀI ĐẶT FRONTEND (Vue 3 + Vite)
 
-### 1. Di chuyển vào thư mục Frontend
+### 6.1 Di chuyển vào thư mục Frontend
 ```bash
 cd PetCare
 ```
 
-### 2. Cài đặt các gói thư viện Node.js
+### 6.2 Cài đặt các gói thư viện Node.js
 ```bash
 npm install
 ```
 
-### 3. Cấu hình IP API kết nối tới Backend
-Mở các file sau và trỏ API về địa chỉ local:
+### 6.3 Cấu hình IP API kết nối tới Backend
+Mở các file sau và trỏ API về địa chỉ local của Backend:
 * **Admin API**: `src/core/baseRequestAdmin.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
 * **Bác sĩ API**: `src/core/baseRequestBacsi.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
 * **Lễ tân API**: `src/core/baseRequestLeTan.js` -> `const apiUrl = "http://127.0.0.1:8000/api/";`
 
-### 4. Khởi chạy Server Frontend
+### 6.4 Khởi chạy Server Frontend
 ```bash
 npm run dev
 ```
@@ -182,7 +255,7 @@ npm run dev
 
 ---
 
-## 🔑 THÔNG TIN TÀI KHẢN ĐĂNG NHẬP MẪU
+## 🔑 7. THÔNG TIN TÀI KHẢN ĐĂNG NHẬP MẪU
 
 Sau khi chạy lệnh `php artisan db:seed`, hệ thống sẽ tự động nạp các tài khoản thử nghiệm sau:
 
@@ -194,15 +267,19 @@ Sau khi chạy lệnh `php artisan db:seed`, hệ thống sẽ tự động nạ
 
 ---
 
-## 🛠️ Khắc Phục Lỗi Thường Gặp (Troubleshooting)
+## 🛠️ 8. KHẮC PHỤC LỖI THƯỜNG GẶP (Troubleshooting)
 
-### 1. Lỗi CORS khi gọi API
-Mở file `config/cors.php` trong Laravel và cấu hình:
+### 8.1 Lỗi CORS (Cross-Origin Resource Sharing)
+Mở file `config/cors.php` trong Laravel Backend và cấu hình cho phép Frontend nhận dữ liệu:
 ```php
 'allowed_origins' => ['http://localhost:5173'],
 ```
 
-### 2. Thiếu quyền thực thi lệnh npm (macOS)
+### 8.2 Lỗi Xác Thực 401 Unauthorized khi gọi API
+* **Nguyên nhân**: Token đã hết hạn hoặc chưa lưu vào LocalStorage.
+* **Xử lý**: Đăng xuất, xóa cache trình duyệt, và tiến hành đăng nhập lại để làm mới token.
+
+### 8.3 Thiếu quyền thực thi lệnh npm (macOS)
 ```bash
 chmod +x node_modules/.bin/*
 ```
