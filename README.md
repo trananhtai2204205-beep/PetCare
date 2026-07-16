@@ -13,14 +13,55 @@
 
 ---
 
-## 📌 1. Sơ Đồ Quy Trình Nghiệp Vụ Tích Hợp (ETVX / SDLC Workflow)
+## 📝 1. Giới Thiệu Dự Án (Introduction)
+
+**PetCare** là một nền tảng Web-Application hiện đại được thiết kế chuyên biệt để tối ưu hóa quy trình vận hành và quản lý của các phòng khám thú y. Với mục tiêu số hóa toàn bộ khâu tiếp nhận và chăm sóc sức khỏe thú cưng, hệ thống hỗ trợ kết nối đồng bộ và phân quyền chặt chẽ giữa 3 đối tượng chính:
+
+*   **🧑‍💼 Quản trị viên (Admin)**: Kiểm soát toàn bộ hệ thống, quản lý thông tin nhân sự (bác sĩ, lễ tân), chuyên khoa, phòng khám, quản lý quyền hạn (RBAC) và theo dõi biểu đồ doanh thu, thống kê số lượng ca khám qua bảng điều khiển thông minh.
+*   **🧑‍💻 Lễ tân (Khách hàng)**: Tiếp nhận thú cưng trực tiếp tại quầy, hỗ trợ khách hàng đăng ký thông tin trực tuyến, đặt lịch hẹn khám theo bác sĩ và khung giờ trống, xuất hóa đơn và xử lý thanh toán nhanh chóng.
+*   **👨‍⚕️ Bác sĩ thú y (Veterinarians)**: Theo dõi danh sách ca bệnh phân công theo thời gian thực, quản lý bệnh án lâm sàng chi tiết của thú cưng, kê đơn thuốc điện tử và theo dõi lịch làm việc cá nhân.
+
+Hệ thống được phát triển theo mô hình tách biệt hoàn toàn **Client-Server (Restful API)** giúp tối ưu hiệu năng tải trang, nâng cao khả năng mở rộng và tăng cường tính bảo mật dữ liệu.
+
+---
+
+## 🛠️ 2. Chi Tiết Công Nghệ Sử Dụng (Detailed Tech Stack)
+
+Dự án ứng dụng các công nghệ tiên tiến nhất trong phát triển Web hiện nay, đảm bảo các tiêu chuẩn về hiệu năng, bảo mật và khả năng bảo trì lâu dài.
+
+### 2.1 Frontend (Client Application)
+Được xây dựng trên nền tảng Single Page Application (SPA) hiện đại:
+*   **Vue 3 (Composition API / Options API)**: Framework chính để xây dựng giao diện người dùng reactive, linh hoạt và tái sử dụng linh kiện (components) hiệu quả.
+*   **Vite**: Công cụ build frontend thế hệ mới thay thế Webpack, cung cấp tính năng Hot Module Replacement (HMR) cực nhanh trong quá trình phát triển.
+*   **TypeScript (TS)**: Đảm bảo kiểm soát kiểu dữ liệu tĩnh nghiêm ngặt, giảm thiểu lỗi runtime trong quá trình code và tối ưu hóa IDE support.
+*   **Vue Router 4**: Quản lý định tuyến trang, bảo vệ các tuyến đường riêng tư bằng cơ chế Route Guards (xác thực token).
+*   **Axios**: Thư viện HTTP client để giao tiếp và gửi/nhận dữ liệu bất đồng bộ (async/await) với Laravel RESTful API.
+*   **Chart.js & Vue-ChartJS**: Vẽ các biểu đồ cột, biểu đồ đường trực quan phục vụ tính năng thống kê doanh thu và ca bệnh của Admin.
+*   **Vue Easy Lightbox**: Thư viện hỗ trợ hiển thị xem ảnh hồ sơ bệnh án và thú cưng dưới dạng popup mượt mà.
+*   **Bootstrap 5 & JQuery**: Cung cấp grid-system giúp giao diện hiển thị tốt trên mọi kích thước màn hình (Responsive Design) và các hiệu ứng động của template Rocker.
+
+### 2.2 Backend (RESTful API Server)
+Kiến trúc API mạnh mẽ, bảo mật và chuẩn hóa:
+*   **Laravel 12 (PHP 8.4)**: Framework MVC phổ biến nhất của PHP, chịu trách nhiệm xử lý logic nghiệp vụ, quản lý cơ sở dữ liệu và cung cấp RESTful API.
+*   **MySQL**: Hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) dùng để lưu trữ an toàn các thông tin người dùng, lịch hẹn, bệnh án và các phân quyền.
+*   **Laravel Sanctum**: Giải pháp xác thực dựa trên Token gọn nhẹ nhưng vô cùng bảo mật, cấp và thu hồi token của người dùng khi đăng nhập/đăng xuất.
+*   **Eloquent ORM**: Giúp tương tác với database thông qua các đối tượng hướng đối tượng (OOP) thay vì viết mã SQL thủ công, tăng tốc độ truy vấn.
+*   **Database Migrations & Seeders**: Quản lý lịch sử thay đổi cấu trúc database và tự động nạp dữ liệu thử nghiệm chuẩn hóa khi deploy.
+
+### 2.3 CI/CD & Chất lượng mã nguồn (DevOps)
+*   **GitHub Actions**: Tự động thực thi quy trình cài đặt thư viện và kiểm tra build ngay khi có thay đổi code.
+*   **SonarCloud**: Quét tĩnh mã nguồn (Static Code Analysis) để tìm kiếm lỗ hổng bảo mật, lỗi logic và đo lường độ trùng lặp mã nguồn (Clean Code).
+
+---
+
+## 📌 3. Sơ Đồ Quy Trình Nghiệp Vụ Tích Hợp (ETVX / SDLC Workflow)
 
 Dưới đây là sơ đồ quy trình hoạt động nghiệp vụ tích hợp (ETVX: Entry - Task - Verification - Exit) của hệ thống PetCare:
 
 ```mermaid
 flowchart TD
     %% Định nghĩa phong cách
-    classDef process fill:#e3faffc,stroke:#15aabf,stroke-width:2px;
+    classDef process fill:#e3faff,stroke:#15aabf,stroke-width:2px;
     classDef actor fill:#f8f9fa,stroke:#495057,stroke-dasharray: 5 5;
     classDef start_end fill:#fff3bf,stroke:#fab005,stroke-width:2px;
 
@@ -57,7 +98,7 @@ flowchart TD
 
 ---
 
-## 📖 2. Tài Liệu API Chi Tiết (Detailed API Reference)
+## 📖 4. Tài Liệu API Chi Tiết (Detailed API Reference)
 
 > [!NOTE]  
 > Hệ thống API Backend sử dụng xác thực qua **Laravel Sanctum**. Mọi request gửi đi yêu cầu đính kèm Header: `Authorization: Bearer <TOKEN>`.
@@ -132,7 +173,7 @@ flowchart TD
 
 ---
 
-## 🗂️ 3. Cấu Trúc Thư Mục Dự Án
+## 🗂️ 5. Cấu Trúc Thư Mục Dự Án
 
 | Thư mục | Vai trò | Công nghệ chính |
 | :--- | :--- | :--- |
@@ -141,9 +182,9 @@ flowchart TD
 
 ---
 
-## 🖥️ 4. Hướng Dẫn Cài Đặt Nhanh (Quick Start)
+## 🖥️ 6. Hướng Dẫn Cài Đặt Nhanh (Quick Start)
 
-### 4.1 Cấu hình Backend (Laravel)
+### 6.1 Cấu hình Backend (Laravel)
 
 ```bash
 # 1. Di chuyển vào thư mục Backend
@@ -179,7 +220,7 @@ php artisan serve
 ```
 👉 Server API chạy tại: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
-### 4.2 Cấu hình Frontend (Vue 3)
+### 6.2 Cấu hình Frontend (Vue 3)
 
 ```bash
 # 1. Di chuyển vào thư mục Frontend
@@ -195,7 +236,7 @@ npm run dev
 
 ---
 
-## 🔑 5. Tài Khoản Đăng Nhập Thử Nghiệm
+## 🔑 7. Tài Khoản Đăng Nhập Thử Nghiệm
 
 Dưới đây là danh sách tài khoản được tạo tự động sau khi chạy lệnh nạp dữ liệu (seed):
 
@@ -207,7 +248,7 @@ Dưới đây là danh sách tài khoản được tạo tự động sau khi ch
 
 ---
 
-## 🛠️ 6. Khắc Phục Lỗi Thường Gặp (Troubleshooting)
+## 🛠️ 8. Khắc Phục Lỗi Thường Gặp (Troubleshooting)
 
 > [!TIP]  
 > **Lỗi CORS (Cross-Origin Resource Sharing)**  
