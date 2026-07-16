@@ -4,7 +4,7 @@ const toaster = createToaster({ position: "top-right" });
 export default function (to, from, next) {
   var token = localStorage.getItem("token_bac_si");
   axios
-    .get("http://192.168.88.105:8000/api/bac-si/check-token", {
+    .get("http://127.0.0.1:8000/api/bac-si/check-token", {
       headers: {
         Authorization: "Bearer " + token,
       },

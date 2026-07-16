@@ -4,7 +4,7 @@ const toaster = createToaster({ position: "top-right" });
 export default function (to, from, next) {
   var token = localStorage.getItem("token_le_tan");
   axios
-    .get("http://192.168.88.105:8000/api/le-tan/check-token", {
+    .get("http://127.0.0.1:8000/api/le-tan/check-token", {
       headers: {
         Authorization: "Bearer " + token,
       },
