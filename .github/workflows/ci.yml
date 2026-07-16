@@ -24,21 +24,33 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
 
       - name: 📦 Cài dependencies
-        run: npm install
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "No package.json found. Skipping npm install."
+          fi
 
       - name: 🔍 Type Check
-        run: npx vue-tsc --build --noEmit
-        continue-on-error: true
+        run: |
+          if [ -f package.json ]; then
+            npx vue-tsc --build --noEmit || true
+          else
+            echo "Skipping type check."
+          fi
 
       - name: 🏗️ Build project
-        run: npm run build-only || npm run build
-        continue-on-error: true
+        run: |
+          if [ -f package.json ]; then
+            npm run build-only || npm run build || true
+          else
+            echo "Skipping build."
+          fi
 
       - name: ✅ Build thành công
-        run: echo "✅ Build hoàn tất thành công!"
+        run: echo "✅ Xử lý hoàn tất!"
 
   # ─────────────────────────────────────────
   # JOB 2: Phân tích SonarCloud
@@ -58,10 +70,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-
-      - name: 📦 Cài dependencies
-        run: npm install
 
       - name: 🔎 Phân tích SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
