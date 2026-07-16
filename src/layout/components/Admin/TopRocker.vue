@@ -4,7 +4,7 @@
             <nav class="navbar navbar-expand">
                 <div class="topbar-logo-header">
                     <div class="">
-                        <img src="../../../assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+                        <img src="../../../assets/images/logo_letan.png" class="logo-icon" alt="logo icon">
                     </div>
                     <div class="">
                         <h4 class="logo-text">Admin</h4>
